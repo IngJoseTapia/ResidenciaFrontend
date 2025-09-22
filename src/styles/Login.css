@@ -1,0 +1,237 @@
+/* //src/styles/Login.css
+/* Reset de márgenes y altura completa */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden; /* bloquea scroll innecesario */
+}
+
+/* Contenedor principal */
+.login-container {
+  height: 100vh; /* altura exacta */
+  width: 100vw;  /* ancho completo */
+  display: flex;
+  align-items: center;    /* centra vertical */
+  justify-content: center; /* centra horizontal */
+  padding: 0;              /* quitar padding que causa desplazamiento */
+  background: linear-gradient(10deg, #ff008c 50%, #ffffff 50%);
+  box-sizing: border-box;
+}
+
+/* Tarjeta de login dividida */
+.login-card {
+  display: flex;
+  width: 90%;       /* se ajusta al 90% de la pantalla */
+  max-width: 900px; /* más ancho que los 800px anteriores */
+  height: 600px; 
+  border-radius: 1rem;
+  overflow: hidden;
+
+  /* Fondo sólido detrás del degradado para que la sombra funcione bien */
+  background-color: #ffffff;
+
+  /* Sombra alrededor del container */
+  box-shadow:
+  0 10px 20px rgba(0,0,0,0.3),
+  0 20px 40px rgba(0,0,0,0.3),
+  0 30px 60px rgba(0,0,0,0.2);
+}
+
+/* Lado izquierdo */
+.login-left {
+  flex: 1;
+  background: linear-gradient(135deg, #000d1f, #000d1f);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+.login-left .login-logo {
+  width: 100%;
+  height: auto;   /* mantiene proporción */
+  max-width: 300px; /* límite para que no se haga gigante */
+  margin-bottom: 1rem;
+}
+
+.login-left .login-slogan {
+  font-size: 1.2rem;
+  font-weight: 500;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 750;
+}
+
+/* Lado derecho */
+.login-right {
+  flex: 1;
+  padding: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Título */
+.login-right h2 {
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif; /* Fuente del sistema */
+  font-weight: 750; /* o 200 */
+  margin-bottom: 0%;
+  margin-top: 0%;
+}
+
+.login-subtitle {
+  font-family: Arial, Helvetica, sans-serif; /* tipografía por defecto del sistema */
+  color: #4b5563;                     /* gris */
+  text-align: center;
+  font-weight: 300; /* o 200 */
+  margin-bottom: 0%;
+  font-size: medium;
+}
+
+.login-correo {
+  font-family: Arial, Helvetica, sans-serif; /* tipografía por defecto del sistema */
+  font-size: small;
+  margin-bottom: 0.5rem;
+}
+
+.login-services {
+  font-family: Arial, Helvetica, sans-serif; /* tipografía por defecto del sistema */
+  color: #4b5563;                     /* gris */
+  text-align: center;
+  font-weight: 300; /* o 200 */
+  font-size: smaller;
+  margin-top: 1rem;
+}
+
+/* Grupo de inputs */
+.input-group {
+  position: relative;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center; /* centra icono e input */
+}
+
+/* Inputs */
+.login-right input {
+  width: 100%;
+  padding: 0.75rem 2.5rem; /* espacio uniforme (izquierda para icono, derecha para botón) */
+  border: 1px solid #9eacc0;
+  border-radius: 0.5rem;
+  outline: none;
+  font-size: 1rem;
+  box-sizing: border-box; /* evita que crezca fuera del contenedor */
+}
+
+.login-right input:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3);
+}
+
+/* Botones */
+.login-btn {
+  width: 100%;
+  height: 2.5rem;
+  background-color: #ff008c;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s;
+}
+
+.login-btn:hover {
+  background-color: #ff33a3;
+}
+
+/* Botón Google */
+.google-btn {
+  width: 100%;
+  height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid #9eacc0;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  background-color: white;
+  transition: background-color 0.2s;
+}
+
+.google-btn:hover {
+  background-color: #d8d8d8;
+}
+
+/* Mensaje de error */
+.error-message {
+  background-color: #fee2e2;
+  color: #b91c1c;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Texto inferior */
+.bottom-text {
+  margin-top: 1.5rem;
+  text-align: center;
+  color: #000000;
+  margin-top: 0.5rem;
+}
+
+.bottom-text a {
+  color: #4f46e5;
+  text-decoration: none;
+}
+
+.bottom-text a:hover {
+  text-decoration: underline;
+}
+
+.forgot-password {
+  text-align: right;
+  font-size: medium;
+  margin-bottom: 1rem;
+}
+
+.forgot-password a {
+  color: #4f46e5;
+  text-decoration: none;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+}
+
+/* Iconos dentro de inputs */
+.input-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%); /* asegura centrado vertical */
+  font-size: 1rem;
+  color: #9ca3af;
+}
+
+/* Botón mostrar/ocultar contraseña */
+.toggle-password {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6b7280;
+  font-size: 1rem;
+}
