@@ -27,6 +27,9 @@ const Dashboard = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loadingPassword, setLoadingPassword] = useState(false);
 
+  const [notifications, setNotifications] = useState([]);
+  const [loadingNotifications, setLoadingNotifications] = useState(true);
+
   const handleLogout = () => {
     logout();
     navigate("/login");
@@ -92,6 +95,27 @@ const Dashboard = () => {
       return () => clearTimeout(timeout);
     }
   }, [securityMessage, securityMessageType]);
+
+  //Efecto para notifaciones de usuario
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/notifications", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+          },
+        });
+        if (!response.ok) throw new Error("Error al obtener notificaciones");
+        const data = await response.json();
+        setNotifications(data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoadingNotifications(false);
+      }
+    };
+    fetchNotifications();
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -570,6 +594,35 @@ const Dashboard = () => {
                 </div>
               </div>
             )}
+            {activeTab === "notificaciones" && (
+              <div className="notificaciones-container">
+                <h2>Centro de Notificaciones</h2>
+                {loadingNotifications ? (
+                  <p>Cargando notificaciones...</p>
+                ) : notifications.length === 0 ? (
+                  <p>No hay notificaciones disponibles</p>
+                ) : (
+                  <>
+                    <div className="notificaciones-filtros">
+                      <button>Todos</button>
+                      <button>No leídos</button>
+                      <button>Sistema</button>
+                      <button>Administrador</button>
+                    </div>
+
+                    <div className="notificaciones-listado">
+                      {notifications.map((n, index) => (
+                        <div key={index} className={`notificacion-card ${n.leida ? "read" : "unread"}`}>
+                          <h3>{n.titulo}</h3>
+                          <p>{n.mensaje}</p>
+                          <small>Fecha: {new Date(n.fechaCreacion).toLocaleString()}</small>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                )}
+              </div>
+            )}
           </section>
         </div>
         
@@ -577,15 +630,39 @@ const Dashboard = () => {
 
       {/* Modal de notificaciones */}
       {showNotifications && (
-        <div className="modal">
-          <div className="modal-content">
-            <h3>Notificaciones</h3>
-            <button className="close-btn" onClick={() => setShowNotifications(false)}>X</button>
-            <ul>
-              <li>Notificación 1</li>
-              <li>Notificación 2</li>
-            </ul>
+        <div className="notifications-dropdown">
+          <div className="dropdown-header">
+            <h4>Notificaciones</h4>
+            <button className="close-btn" onClick={() => setShowNotifications(false)}>×</button>
           </div>
+
+          {loadingNotifications ? (
+            <p>Cargando...</p>
+          ) : notifications.length === 0 ? (
+            <p>No tienes notificaciones nuevas</p>
+          ) : (
+            <ul className="notifications-list">
+              {notifications.slice(0, 5).map((n, index) => (
+                <li key={index} className={`notif-item ${n.leida ? "read" : "unread"}`}>
+                  <div className="notif-title">
+                    <h4>{n.titulo}</h4>
+                  </div>
+                  <div className="notif-message">{n.mensaje}</div>
+                  <small>{new Date(n.fechaCreacion).toLocaleString()}</small>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          <button
+            className="ver-todas-btn"
+            onClick={() => {
+              setActiveTab("notificaciones");
+              setShowNotifications(false);
+            }}
+          >
+            Ver todas
+          </button>
         </div>
       )}
     </div>
