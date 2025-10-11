@@ -1,15 +1,17 @@
+//src/main.jsx
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import { AuthProvider } from "./context/AuthProvider";
-import { UserProvider } from "./context/UserProvider"; // <-- importar UserProvider
+import { UserProvider } from "./context/UserProvider";
+import { NotificationProvider } from "./context/NotificationProvider";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <AuthProvider>
-      <UserProvider> {/* <-- envolver App con UserProvider */}
+  <AuthProvider>
+    <UserProvider>
+      <NotificationProvider>
         <App />
-      </UserProvider>
-    </AuthProvider>
-  </React.StrictMode>
+      </NotificationProvider>
+    </UserProvider>
+  </AuthProvider>
 );

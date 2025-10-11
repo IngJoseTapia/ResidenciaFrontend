@@ -3,34 +3,33 @@ import React, { useState, useEffect, useCallback } from "react";
 import { jwtDecode } from "jwt-decode";
 import { AuthContext } from "./AuthContext";
 
-let refreshPromise = null;
+let refreshPromise = null; // Previene múltiples refresh simultáneos
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [jwt, setJwt] = useState(localStorage.getItem("jwt") || null);
   const [refreshToken, setRefreshToken] = useState(localStorage.getItem("refreshToken") || null);
-  const [justLoggedIn, setJustLoggedIn] = useState(false);
-  const [authError, setAuthError] = useState(""); // 🔹 nuevo estado para errores globales
+  const [authError, setAuthError] = useState("");
+  const [loading, setLoading] = useState(true); // 🔹 Nuevo estado
 
+  // 🔹 Logout centralizado
   const logout = useCallback(() => {
     setUser(null);
     setJwt(null);
     setRefreshToken(null);
-    setJustLoggedIn(false);
-    setAuthError(""); // 🔹 limpiar error al hacer logout
+    setAuthError("");
     localStorage.removeItem("jwt");
     localStorage.removeItem("refreshToken");
   }, []);
 
+  // 🔹 Refresh token seguro
   const refreshJwt = useCallback(async () => {
     if (!refreshToken) {
       logout();
       return null;
     }
 
-    if (refreshPromise) {
-      return refreshPromise;
-    }
+    if (refreshPromise) return refreshPromise;
 
     refreshPromise = (async () => {
       try {
@@ -46,7 +45,6 @@ export const AuthProvider = ({ children }) => {
         }
 
         const data = await response.json();
-
         if (!data?.token) {
           logout();
           return null;
@@ -65,7 +63,7 @@ export const AuthProvider = ({ children }) => {
           setUser({
             token: data.token,
             correo: decoded.email || decoded.sub,
-            role: decoded.role || decoded.roles || "USER",
+            role: decoded.rol || "USER",
           });
         } catch (err) {
           console.warn("No se pudo decodificar el token tras refresh:", err);
@@ -84,9 +82,11 @@ export const AuthProvider = ({ children }) => {
     return refreshPromise;
   }, [refreshToken, logout]);
 
+  // 🔹 Inicializar usuario desde token
   useEffect(() => {
     if (!jwt) {
       setUser(null);
+      setLoading(false); // Termina carga
       return;
     }
 
@@ -95,51 +95,38 @@ export const AuthProvider = ({ children }) => {
       setUser({
         token: jwt,
         correo: decoded.email || decoded.sub,
-        role: decoded.role || decoded.roles || "USER",
+        role: decoded.rol || "USER",
       });
     } catch (err) {
       console.error("Error decodificando token:", err);
       logout();
+    } finally {
+      setLoading(false);
     }
   }, [jwt, logout]);
 
+  // 🔹 Auto-refresh
   useEffect(() => {
-    if (!jwt || justLoggedIn) return;
+    if (!jwt) return;
 
-    let timerId = null;
+    let timerId;
     try {
       const decoded = jwtDecode(jwt);
-      const expTimeMs = decoded.exp * 1000;
-      const msUntilRefresh = expTimeMs - Date.now() - 60_000;
+      const msUntilRefresh = decoded.exp * 1000 - Date.now() - 60_000;
 
       if (msUntilRefresh > 0) {
-        timerId = setTimeout(async () => {
-          try {
-            await refreshJwt();
-          } catch (err) {
-            console.error("Auto-refresh falló:", err);
-          }
-        }, msUntilRefresh);
+        timerId = setTimeout(refreshJwt, msUntilRefresh);
       } else {
-        (async () => {
-          try {
-            await refreshJwt();
-          } catch (err) {
-            console.error("Auto-refresh inmediato falló:", err);
-          }
-        })();
+        refreshJwt();
       }
     } catch (err) {
       console.error("Error en auto-refresh (jwt decode):", err);
     }
 
-    return () => {
-      if (timerId) clearTimeout(timerId);
-      setJustLoggedIn(false);
-    };
-  }, [jwt, refreshJwt, justLoggedIn]);
+    return () => timerId && clearTimeout(timerId);
+  }, [jwt, refreshJwt]);
 
-  // 🔹 Login normal con manejo de error
+  // 🔹 Login normal
   const login = async (email, password) => {
     try {
       const response = await fetch("http://localhost:8080/auth/login", {
@@ -151,7 +138,7 @@ export const AuthProvider = ({ children }) => {
       const data = await response.json().catch(() => ({}));
 
       if (!response.ok) {
-        setAuthError(data.mensaje || "Error en login"); // 🔹 guardar error
+        setAuthError(data.mensaje || "Error en login");
         return { success: false, message: data.mensaje || "Error en login" };
       }
 
@@ -165,29 +152,27 @@ export const AuthProvider = ({ children }) => {
         setUser({
           token: data.token,
           correo: decoded.email || decoded.sub,
-          role: decoded.role || decoded.roles || "USER",
+          role: decoded.rol || "USER",
         });
       } catch (err) {
         console.warn("No se pudo decodificar token al loguear:", err);
       }
 
-      setAuthError(""); // 🔹 limpiar error si login exitoso
-      setJustLoggedIn(true);
-
+      setAuthError("");
       return { success: true };
     } catch (error) {
       console.error("Error en login:", error);
-      setAuthError(error.message); // 🔹 guardar error
+      setAuthError(error.message);
       return { success: false, message: error.message };
     }
   };
 
-  // 🔹 Login con Google con manejo de error
+  // 🔹 Login Google
   const loginWithGoogle = (data) => {
     if (data.error) {
-      setAuthError(data.error); // 🔹 guardar error de Google
+      setAuthError(data.error);
       setUser(null);
-      return;
+      return { success: false, message: data.error };
     }
 
     if (data.token && data.refreshToken) {
@@ -201,14 +186,14 @@ export const AuthProvider = ({ children }) => {
         setUser({
           token: data.token,
           correo: decoded.email || decoded.sub,
-          role: decoded.role || decoded.roles || "USER",
+          role: decoded.rol || "USER",
         });
       } catch (err) {
         console.warn("No se pudo decodificar token google:", err);
       }
 
-      setAuthError(""); // 🔹 limpiar error si login exitoso
-      setJustLoggedIn(true);
+      setAuthError("");
+      return { success: true };
     }
   };
 
@@ -217,12 +202,13 @@ export const AuthProvider = ({ children }) => {
       value={{
         user,
         jwt,
+        loading, // 🔹 agregamos loading
         login,
         logout,
         refreshJwt,
         loginWithGoogle,
-        authError, // 🔹 exponemos el error
-        setAuthError, 
+        authError,
+        setAuthError,
       }}
     >
       {children}

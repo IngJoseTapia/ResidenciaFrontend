@@ -1,21 +1,19 @@
 // src/routes/ProtectedRoute.jsx
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth"; // IMPORTANTE: importar el hook separado
+import { useAuth } from "../hooks/useAuth";
 
-const ProtectedRoute = ({ children, role }) => {
-  const { user } = useAuth(); // Obtenemos user desde el contexto
+const ProtectedRoute = ({ children, rol }) => {
+  const { user, loading } = useAuth();
 
-  // Si no hay usuario logueado, redirige al login
-  if (!user) {
-    return <Navigate to="/login" replace />;
+  // 🔹 Esperar a que se cargue el user
+  if (loading) {
+    return <p>Cargando...</p>;
   }
 
-  // Si se especifica un rol y el usuario no lo cumple, redirige a unauthorized
-  if (role && user.role !== role) {
-    return <Navigate to="/unauthorized" replace />;
-  }
+  if (!user) return <Navigate to="/login" replace />;
 
-  // Si todo está bien, renderiza los hijos
+  if (rol && user.role !== rol) return <Navigate to="/unauthorized" replace />;
+
   return children;
 };
 

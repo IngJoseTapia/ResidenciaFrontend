@@ -7,6 +7,12 @@ import { FcGoogle } from "react-icons/fc";
 import logoINE from "../assets/btnIFE.png";
 import "../styles/Login.css";
 
+const ROLE_PATHS = {
+  ADMIN: "/admin/dashboard",
+  VOCAL: "/vocal/dashboard",
+  USER: "/user/dashboard",
+};
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,7 +24,10 @@ const Login = () => {
 
   // Redirigir si ya está autenticado
   useEffect(() => {
-    if (user) navigate("/dashboard");
+    if (user) {
+      const userRole = user.role?.toUpperCase() || "USER";
+      navigate(ROLE_PATHS[userRole] || "/user/dashboard");
+    }
   }, [user, navigate]);
 
   // 🔹 Limpiar el mensaje de error automáticamente después de 5 segundos
@@ -36,13 +45,8 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
 
-    const result = await login(email, password);
+    await login(email, password); // ya no guardamos en result
     setLoading(false);
-
-    if (result.success) {
-      navigate("/dashboard");
-    }
-    // ❌ ya no necesitamos setError, authError lo maneja
   };
 
   const handleGoogleLogin = () => {

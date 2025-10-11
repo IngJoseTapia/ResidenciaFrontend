@@ -1,6 +1,9 @@
 // src/utils/fetchWithAuth.js
 import { jwtDecode } from "jwt-decode";
 
+/**
+ * Verifica si el JWT ya expiró
+ */
 const isTokenExpired = (token) => {
   try {
     const { exp } = jwtDecode(token);
@@ -10,48 +13,64 @@ const isTokenExpired = (token) => {
   }
 };
 
+/**
+ * Fetch con manejo de autenticación y refresh token
+ * @param {string} url - URL del endpoint
+ * @param {object} options - Opciones del fetch (method, body, headers, etc)
+ * @param {object} authContext - { jwt, refreshJwt, logout }
+ * @returns {Promise<any>} - JSON del endpoint
+ */
 export const fetchWithAuth = async (url, options = {}, { jwt, refreshJwt, logout }) => {
   let tokenToUse = jwt;
 
-  // 🔹 Si ya expiró el token, intenta refrescar antes de hacer la llamada
+  // 🔹 Si el token expiró, intenta refrescarlo antes de hacer fetch
   if (isTokenExpired(jwt)) {
-    const newToken = await refreshJwt();
-    if (!newToken) {
+    tokenToUse = await refreshJwt();
+    if (!tokenToUse) {
       logout();
       throw new Error("Sesión expirada. Por favor inicia sesión nuevamente.");
     }
-    tokenToUse = newToken;
   }
 
   const doFetch = async (token) => {
+    if (!token) {
+      logout();
+      throw new Error("Sesión expirada. Por favor inicia sesión nuevamente.");
+    }
+
     return fetch(url, {
       ...options,
       headers: {
-        ...(options.headers || {}),
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
+        ...(options.headers || {}),
       },
     });
   };
 
   try {
-    // 🔹 Primer intento con el token actual
+    // 🔹 Primer intento
     let response = await doFetch(tokenToUse);
 
-    // 🔹 Si expira el token (401 o 403), intentar refrescar
+    // 🔹 Si retorna 401 o 403, intenta refrescar y reintentar
     if (response.status === 401 || response.status === 403) {
-      const newToken = await refreshJwt(); // 🔹 intenta renovar
-
-      if (!newToken) {
+      tokenToUse = await refreshJwt();
+      if (!tokenToUse) {
         logout();
         throw new Error("Sesión expirada. Por favor inicia sesión nuevamente.");
       }
 
-      // 🔹 Reintentar con token renovado
-      response = await doFetch(newToken);
+      response = await doFetch(tokenToUse);
     }
 
-    return response;
+    // 🔹 Si aún falla, lanzar error
+    if (!response.ok) {
+      const text = await response.text();
+      throw new Error(text || "Error en la petición");
+    }
+
+    // 🔹 Retornar JSON directamente
+    return response.json();
   } catch (err) {
     console.error("Error en fetchWithAuth:", err);
     throw err;

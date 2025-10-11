@@ -19,7 +19,7 @@ export default function GoogleCallback() {
       navigate("/login", { replace: true });
     } else if (token && refreshToken) {
       loginWithGoogle({ token, refreshToken });
-      navigate("/dashboard", { replace: true });
+      navigate("/user/dashboard", { replace: true });
     } else {
       navigate("/login", { replace: true });
     }

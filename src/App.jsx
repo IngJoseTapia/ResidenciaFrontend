@@ -5,7 +5,8 @@ import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
 import VerifyResetToken from "./pages/VerifyResetToken";
 import ResetPassword from "./pages/ResetPassword";
-import Dashboard from "./pages/Dashboard";
+import DashboardUser from "./pages/DashboardUser";
+import DashboardAdmin from "./pages/DashboardAdmin";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import GoogleCallback from "./pages/GoogleCallback";
 
@@ -26,10 +27,28 @@ function App() {
 
         {/* Dashboard protegido */}
         <Route
-          path="/dashboard"
+          path="/user/dashboard"
           element={
             <ProtectedRoute>
-              <Dashboard />
+              <DashboardUser />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/dashboard"
+          element={
+            <ProtectedRoute role="ADMIN">
+              <DashboardAdmin />
+            </ProtectedRoute>
+          }
+        />
+{/*
+        <Route
+          path="/vocal/dashboard"
+          element={
+            <ProtectedRoute role="VOCAL">
+              <VocalDashboard />
             </ProtectedRoute>
           }
         />
