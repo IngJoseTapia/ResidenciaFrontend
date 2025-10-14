@@ -1,14 +1,14 @@
 // src/tabs/Vocalias.jsx
 import React from "react";
-import "../styles/Dashboard.css";
+import "../styles/Vocalias.css";
 
 const Vocalias = ({ vocalias, loading, error }) => {
   if (loading) return <p>Cargando vocalías...</p>;
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="tab-content">
-      <h2>Vocalías</h2>
+    <div className="vocalias-container">
+      <h2 className="vocalias-title">Vocalías</h2>
       <table className="tab-table">
         <thead>
           <tr>

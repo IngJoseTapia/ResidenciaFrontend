@@ -1,6 +1,6 @@
 // src/tabs/Tutorial.jsx
 import React from "react";
-import "../styles/Dashboard.css"; // Si quieres mantener estilos generales
+import "../styles/Tutorial.css"; // Si quieres mantener estilos generales
 
 const Tutorial = () => {
   return (

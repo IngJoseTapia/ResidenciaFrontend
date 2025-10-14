@@ -1,64 +1,165 @@
+/*//src/styles/Notifications.css*/
+/* ==============================
+   Contenedor principal del modal
+   ============================== */
 .notifications-dropdown {
   position: absolute;
   top: 70px;
   right: 20px;
-  background: white;
-  border: 1px solid #ccc;
-  border-radius: 12px;
+  max-width: 90vw;
   width: 320px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  z-index: 9999;
+  background: white;
+  border: 1px solid #007bff;
+  border-radius: 12px;
+  box-shadow:
+    0 10px 20px rgba(0,0,0,0.2),
+    0 20px 40px rgba(0,0,0,0.1),
+    0 30px 60px rgba(0,0,0,0.1);
   animation: fadeIn 0.3s ease;
+  padding: 10px;
+  z-index: 1000;
 }
 
+.notifications-dropdown.fade-out {
+  animation: fadeOut 0.3s forwards;
+}
+
+/* ==============================
+   Header del modal
+   ============================== */
 .dropdown-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px;
-  background-color: #f4f4f4;
-  border-bottom: 1px solid #ddd;
+  background-color: #e6e2e2;
+  border-bottom: 3px solid #007bff;
 }
 
+.header {
+  margin-left: 1rem;
+}
+
+/* Botón de cerrar */
 .close-btn {
+  width: 32px;
+  height: 32px;
   background: transparent;
   border: none;
   font-size: 1.2rem;
   cursor: pointer;
+  color: #007bff;
+  border-radius: 50%; /* círculo perfecto */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
 }
 
+.close-btn:hover {
+  background-color: #007bff;
+  color: white;
+  transform: rotate(90deg);
+}
+
+/* ==============================
+   Lista de notificaciones
+   ============================== */
 .notifications-list {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 10px 0;
+  max-height: 300px;
 }
 
+/* ==============================
+   Items de notificación
+   ============================== */
 .notif-item {
-  padding: 10px 15px;
-  border-bottom: 1px solid #eee;
+  padding: 8px;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: none;
+  animation: slideIn 0.3s ease;
 }
 
+.notif-item:hover {
+  background-color: #e6f0ff;
+  transform: translateX(2px);
+  transition: all 0.2s ease;
+}
+
+/* Diferenciar leídas y no leídas */
 .notif-item.unread {
   background-color: #f0f8ff;
+  border-left: 4px solid #007bff;
+}
+
+
+/* Animación escalonada */
+.notif-item:nth-child(1) { animation-delay: 0.05s; }
+.notif-item:nth-child(2) { animation-delay: 0.10s; }
+.notif-item:nth-child(3) { animation-delay: 0.15s; }
+.notif-item:nth-child(4) { animation-delay: 0.20s; }
+.notif-item:nth-child(5) { animation-delay: 0.25s; }
+
+/* ==============================
+   Títulos, mensajes e iconos
+   ============================== */
+.notif-title {
+  display: flex;
+  align-items: center;
 }
 
 .notif-item h4 {
   margin: 0;
-  font-size: 1rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  display: inline-block;
 }
 
 .notif-message {
   font-size: 0.9rem;
-  color: #555;
+  color: #2e2e2e;
+  margin-top: 2px;
 }
 
+.notif-item small {
+  display: block;
+  font-size: 0.75rem;
+  color: #343434;
+  margin-top: 4px;
+}
+
+.notif-icon {
+  margin-right: 8px;
+  color: #007bff;
+}
+
+.new-badge {
+  color: #007bff;
+  font-size: 0.8rem;
+  margin-right: 5px;
+}
+
+/* ==============================
+   Botones
+   ============================== */
+.ver-todas-btn,
+.notif-resolve-btn {
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Botón ver todas */
 .ver-todas-btn {
   width: 100%;
   border: none;
   background-color: #007bff;
   color: white;
-  padding: 10px;
-  border-radius: 0 0 12px 12px;
+  padding: 8px;
+  border-radius:5px;
   cursor: pointer;
 }
 
@@ -66,7 +167,37 @@
   background-color: #0056b3;
 }
 
+/* Botón de acción en notificación */
+.notif-resolve-btn {
+  margin-top: 5px;
+  background-color: #007bff;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+
+.notif-resolve-btn:hover {
+  background-color: #0056b3;
+}
+
+/* ==============================
+   Animaciones
+   ============================== */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-10px); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/*Otros*/
+

@@ -1,6 +1,5 @@
 // src/pages/Dashboard/Bienvenida.jsx
-import React from "react";
-import "../styles/Dashboard.css";
+import "../styles/Bienvenida.css";
 
 const Bienvenida = () => {
   return (

@@ -1,7 +1,7 @@
 // src/components/PasswordForm.jsx
 import React, { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa";
-import "../styles/Dashboard.css";
+import "../styles/PasswordForm.css";
 
 const PasswordForm = ({ user, changePassword }) => {
   const [formData, setFormData] = useState({
@@ -65,7 +65,7 @@ const PasswordForm = ({ user, changePassword }) => {
   return (
     <form className="perfil-form" onSubmit={handleSubmit}>
       {user?.tieneContrasena && (
-        <div className="form-group password-group">
+        <div className="password-group">
           <label>Contraseña actual</label>
           <div className="password-wrapper">
             <input
@@ -83,7 +83,7 @@ const PasswordForm = ({ user, changePassword }) => {
         </div>
       )}
 
-      <div className="form-group password-group">
+      <div className="password-group">
         <label>{user?.tieneContrasena ? "Nueva contraseña" : "Contraseña"}</label>
         <div className="password-wrapper">
           <input
@@ -100,7 +100,7 @@ const PasswordForm = ({ user, changePassword }) => {
         </div>
       </div>
 
-      <div className="form-group password-group">
+      <div className="password-group">
         <label>Confirma tu nueva contraseña</label>
         <div className="password-wrapper">
           <input

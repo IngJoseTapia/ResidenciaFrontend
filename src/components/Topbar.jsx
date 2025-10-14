@@ -1,6 +1,6 @@
 //src/components/Topbar.jsx
 import { FaBell, FaUser, FaSignOutAlt } from "react-icons/fa";
-import "../styles/Dashboard.css";
+import "../styles/Topbar.css";
 
 /**
  * Topbar Component

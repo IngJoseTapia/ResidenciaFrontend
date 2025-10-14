@@ -1,5 +1,5 @@
 //src/pages/DashboardUser.jsx
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { useUser } from "../hooks/useUser";
 import { useNotifications } from "../hooks/useNotifications";
@@ -39,13 +39,18 @@ const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [showNotifications, setShowNotifications] = useState(false);
 
-  // --- Funciones auxiliares ---
-  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+  const handleViewAllNotifications = useCallback(async () => {
+    await reloadNotifications();
+    setActiveTab("notificaciones");
+    setShowNotifications(false);
+  }, [reloadNotifications]);
 
-  const handleLogout = () => {
+  // --- Funciones auxiliares ---
+  const toggleSidebar = useCallback(() => setSidebarOpen(prev => !prev), []);
+  const handleLogout = useCallback(() => {
     logout();
     navigate("/login");
-  };
+  }, [logout, navigate]);
 
   if (loadingUser) return <p>Cargando información del usuario...</p>;
 
@@ -89,6 +94,7 @@ const Dashboard = () => {
                 notifications={notifications}
                 loadingNotifications={loadingNotifications}
                 reloadNotifications={reloadNotifications}
+                setActiveTab={setActiveTab}
               />
             )}
           </section>
@@ -101,10 +107,8 @@ const Dashboard = () => {
           notifications={notifications}
           loadingNotifications={loadingNotifications}
           onClose={() => setShowNotifications(false)}
-          onViewAll={() => {
-            setActiveTab("notificaciones");
-            setShowNotifications(false);
-          }}
+          onViewAll={handleViewAllNotifications}
+          setActiveTab={setActiveTab} // <-- pasa esto para redirigir al tab
         />
       )}
     </div>

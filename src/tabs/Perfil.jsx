@@ -2,7 +2,7 @@
 import React from "react";
 import InfoPersonalForm from "../components/InfoPersonalForm";
 import PasswordForm from "../components/PasswordForm";
-import "../styles/Dashboard.css";
+import "../styles/Perfil.css";
 
 const Perfil = ({ user, updateUserInfo, changePassword }) => {
   return (

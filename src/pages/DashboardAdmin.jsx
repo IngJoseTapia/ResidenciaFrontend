@@ -114,6 +114,7 @@ const DashboardAdmin = () => {
                 notifications={notifications}
                 loadingNotifications={loadingNotifications}
                 reloadNotifications={reloadNotifications}
+                setActiveTab={setActiveTab}
               />
             )}
           </section>
@@ -126,6 +127,7 @@ const DashboardAdmin = () => {
           loadingNotifications={loadingNotifications}
           onClose={() => setShowNotifications(false)}
           onViewAll={handleViewAllNotifications}
+          setActiveTab={setActiveTab} // <-- pasa esto para redirigir al tab
         />
       )}
     </div>

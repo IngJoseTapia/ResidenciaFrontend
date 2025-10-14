@@ -1,7 +1,7 @@
 // src/components/InfoPersonalForm.jsx
 import React, { useEffect, useState } from "react";
 import { FaSpinner } from "react-icons/fa";
-import "../styles/Dashboard.css";
+import "../styles/InfoPersonalForm.css";
 
 const InfoPersonalForm = ({ user, updateUserInfo }) => {
   const [formData, setFormData] = useState({
@@ -66,27 +66,27 @@ const InfoPersonalForm = ({ user, updateUserInfo }) => {
 
   return (
     <form className="perfil-form" onSubmit={handleSubmit}>
-      <div className="form-group">
+      <div className="form-group-info">
         <label>Correo</label>
         <p className="readonly-field">{formData.correo}</p>
       </div>
-      <div className="form-group">
+      <div className="form-group-info">
         <label>Nombre</label>
         <input type="text" name="nombre" value={formData.nombre} onChange={handleChange} required />
       </div>
-      <div className="form-group">
+      <div className="form-group-info">
         <label>Apellido Paterno</label>
         <input type="text" name="apellidoPaterno" value={formData.apellidoPaterno} onChange={handleChange} required />
       </div>
-      <div className="form-group">
+      <div className="form-group-info">
         <label>Apellido Materno</label>
         <input type="text" name="apellidoMaterno" value={formData.apellidoMaterno} onChange={handleChange} required />
       </div>
-      <div className="form-group">
+      <div className="form-group-info">
         <label>Teléfono</label>
         <input type="text" name="telefono" value={formData.telefono} onChange={handleChange} required />
       </div>
-      <div className="form-group">
+      <div className="form-group-info">
         <label>Género</label>
         <select name="genero" value={formData.genero} onChange={handleChange} required>
           <option value="">Seleccione...</option>

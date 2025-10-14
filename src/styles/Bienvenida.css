@@ -1,0 +1,64 @@
+/* //src/styles/Bienvenida.css */
+
+/* Contenedor principal */
+.bienvenida-container {
+  padding: 2rem;
+}
+
+.bienvenida-title {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  color: #000d1f;
+}
+
+.bienvenida-subtitle {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  color: #444;
+}
+
+/* Grid de tarjetas */
+.bienvenida-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Tarjetas */
+.card {
+  background: #f3cee2;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow:
+    0 10px 20px rgba(0,0,0,0.2),
+    0 20px 40px rgba(0,0,0,0.1),
+    0 30px 60px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+}
+
+/* Secciones administrativas y de objetivos */
+.admin-section, 
+.objetivos-section {
+  margin-bottom: 2rem;
+}
+
+.admin-section h2,
+.objetivos-section h2 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: #000d1f;
+}
+
+/* Footer de bienvenida */
+.bienvenida-footer {
+  font-weight: bold;
+  font-size: 1.6rem;
+  margin-top: 1rem;
+  color: #000d1f;
+  text-align: center;
+}

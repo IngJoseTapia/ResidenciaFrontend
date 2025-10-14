@@ -9,7 +9,7 @@ import {
   FaBuilding,
 } from "react-icons/fa";
 import { useAuth } from "../hooks/useAuth";
-import "../styles/Dashboard.css";
+import "../styles/Sidebar.css";
 
 /**
  * Sidebar Component

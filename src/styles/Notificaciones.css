@@ -1,0 +1,65 @@
+/* src/styles/Notificaciones.css */
+
+/* Contenedor principal */
+.notificaciones-container {
+  padding: 2rem;
+}
+
+/* Filtros de notificaciones */
+.notificaciones-filtros {
+  margin-bottom: 1.5rem;
+}
+
+.notificaciones-filtros button {
+  background: #f3f3f3;
+  border: 1px solid #9eacc0;
+  padding: 0.5rem 1rem;
+  margin-right: 0.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.notificaciones-filtros button:hover {
+  background: #e0e0e0;
+}
+
+.notificaciones-filtros button.active {
+  background: #ff008c;
+  color: white;
+  border-color: #ff008c;
+}
+
+/* Tarjeta de notificación */
+.notificacion-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow:
+    0 10px 20px rgba(0,0,0,0.2),
+    0 20px 40px rgba(0,0,0,0.1),
+    0 30px 60px rgba(0,0,0,0.1);
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.notificacion-card.unread {
+  border-left: 5px solid #007bff;
+}
+
+/* Botón para ir a seguridad */
+.resolve-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 0.5rem;
+  transition: background-color 0.2s;
+}
+
+.resolve-btn:hover {
+  background-color: #0056b3;
+}

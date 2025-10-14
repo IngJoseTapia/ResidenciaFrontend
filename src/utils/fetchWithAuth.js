@@ -69,8 +69,20 @@ export const fetchWithAuth = async (url, options = {}, { jwt, refreshJwt, logout
       throw new Error(text || "Error en la petición");
     }
 
+    // 🧩 NUEVA LÓGICA: manejar respuestas vacías o sin JSON
+    const text = await response.text(); // obtenemos la respuesta como texto primero
+    if (!text) {
+      return {}; // si está vacía, devolvemos un objeto vacío
+    }
+
     // 🔹 Retornar JSON directamente
-    return response.json();
+    try {
+      return JSON.parse(text); // intentamos parsear JSON si existe
+    } catch (e) {
+      console.warn("Respuesta no JSON del servidor:", text);
+      console.log(e);
+      return {}; // si no es JSON válido, devolvemos vacío para no romper el flujo
+    }
   } catch (err) {
     console.error("Error en fetchWithAuth:", err);
     throw err;

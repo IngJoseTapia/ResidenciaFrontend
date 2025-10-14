@@ -1,7 +1,7 @@
 // src/tabs/Institucion.jsx
 import React from "react";
 import { FaFacebook, FaInstagram, FaGlobe, FaYoutube } from "react-icons/fa";
-import "../styles/Dashboard.css";
+import "../styles/Institucion.css";
 
 const Institucion = () => {
   return (
