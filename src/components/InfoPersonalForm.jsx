@@ -35,7 +35,7 @@ const InfoPersonalForm = ({ user, updateUserInfo }) => {
     if (!message) return;
     const timeout = setTimeout(
       () => setMessage(""),
-      messageType === "success" ? 4000 : 8000
+      messageType === "success" ? 5000 : 10000
     );
     return () => clearTimeout(timeout);
   }, [message, messageType]);

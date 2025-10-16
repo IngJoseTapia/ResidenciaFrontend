@@ -65,8 +65,21 @@ export const fetchWithAuth = async (url, options = {}, { jwt, refreshJwt, logout
 
     // 🔹 Si aún falla, lanzar error
     if (!response.ok) {
-      const text = await response.text();
-      throw new Error(text || "Error en la petición");
+      let errorMessage = "Error en la petición";
+
+      try {
+        const errorData = await response.json(); // Intentar parsear JSON
+        if (errorData.mensaje) {
+          errorMessage = errorData.mensaje; // Usar el mensaje del backend
+        } else if (typeof errorData === "string") {
+          errorMessage = errorData;
+        }
+      } catch {
+        const text = await response.text();
+        if (text) errorMessage = text;
+      }
+
+      throw new Error(errorMessage);
     }
 
     // 🧩 NUEVA LÓGICA: manejar respuestas vacías o sin JSON
