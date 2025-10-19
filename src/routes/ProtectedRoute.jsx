@@ -1,19 +1,61 @@
 // src/routes/ProtectedRoute.jsx
-import { Navigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import { Navigate, useLocation } from "react-router-dom";
 
-const ProtectedRoute = ({ children, rol }) => {
+const PUBLIC_ROUTES = [
+  "/", 
+  "/register",
+  "/forgot-password",
+  "/verify-reset-token",
+  "/reset-password",
+];
+
+const ProtectedRoute = ({ children, role }) => {
   const { user, loading } = useAuth();
+  const location = useLocation();
 
-  // 🔹 Esperar a que se cargue el user
-  if (loading) {
-    return <p>Cargando...</p>;
+  if (loading) return <p>Cargando...</p>;
+
+  // 🔸 Si es una ruta pública, no hay restricción
+  if (PUBLIC_ROUTES.includes(location.pathname)) return children;
+
+  // 🔸 Detectar logout intencional
+  const justLoggedOut = sessionStorage.getItem("justLoggedOut") === "1";
+
+  if (justLoggedOut) {
+    // borrar la marca inmediatamente
+    sessionStorage.removeItem("justLoggedOut");
+    return <Navigate to="/" replace />;
   }
 
-  if (!user) return <Navigate to="/login" replace />;
+  // 🔸 Usuario no logeado (sin logout intencional)
+  if (!user) {
+    return (
+      <Navigate
+        to="/unauthorized"
+        replace
+        state={{ from: location.pathname, fallback: "/" }}
+      />
+    );
+  }
 
-  if (rol && user.role !== rol) return <Navigate to="/unauthorized" replace />;
+  // 🔸 Usuario logeado, pero sin rol permitido
+  if (role && user.role !== role) {
+    const fallbackDashboard =
+      user.role === "ADMIN" ? "/admin/dashboard" :
+      user.role === "VOCAL" ? "/vocal/dashboard" :
+      "/user/dashboard";
 
+    return (
+      <Navigate
+        to="/unauthorized"
+        replace
+        state={{ from: location.pathname, fallback: fallbackDashboard }}
+      />
+    );
+  }
+
+  // 🔸 Usuario válido
   return children;
 };
 

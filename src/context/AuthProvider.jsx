@@ -11,15 +11,23 @@ export const AuthProvider = ({ children }) => {
   const [refreshToken, setRefreshToken] = useState(localStorage.getItem("refreshToken") || null);
   const [authError, setAuthError] = useState("");
   const [loading, setLoading] = useState(true); // 🔹 Nuevo estado
+  const [justLoggedOut, setJustLoggedOut] = useState(false);
 
   // 🔹 Logout centralizado
   const logout = useCallback(() => {
+    try {
+      // 🔸 Marca que el logout fue intencional
+      sessionStorage.setItem("justLoggedOut", "1");
+    } catch (e) {
+      console.warn("No se pudo guardar justLoggedOut:", e);
+    }
     setUser(null);
     setJwt(null);
     setRefreshToken(null);
     setAuthError("");
     localStorage.removeItem("jwt");
     localStorage.removeItem("refreshToken");
+    setJustLoggedOut(true); // activa flag de logout
   }, []);
 
   // 🔹 Refresh token seguro
@@ -63,7 +71,7 @@ export const AuthProvider = ({ children }) => {
           setUser({
             token: data.token,
             correo: decoded.email || decoded.sub,
-            role: decoded.rol || "USER",
+            role: (decoded.rol || decoded.role || "USER").toUpperCase(),
           });
         } catch (err) {
           console.warn("No se pudo decodificar el token tras refresh:", err);
@@ -209,6 +217,8 @@ export const AuthProvider = ({ children }) => {
         loginWithGoogle,
         authError,
         setAuthError,
+        justLoggedOut, // 🚀
+        setJustLoggedOut, // 🚀
       }}
     >
       {children}

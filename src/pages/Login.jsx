@@ -24,9 +24,14 @@ const Login = () => {
 
   // Redirigir si ya está autenticado
   useEffect(() => {
-    if (user) {
-      const userRole = user.role?.toUpperCase() || "USER";
-      navigate(ROLE_PATHS[userRole] || "/user/dashboard");
+    if (!user) return;
+
+    const userRole = user.role?.toUpperCase() || "USER";
+    const targetPath = ROLE_PATHS[userRole] || "/user/dashboard";
+
+    // Evita navegar si ya estamos en la ruta destino
+    if (window.location.pathname !== targetPath) {
+      navigate(targetPath, { replace: true });
     }
   }, [user, navigate]);
 

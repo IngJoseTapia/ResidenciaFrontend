@@ -65,7 +65,7 @@ const InfoPersonalForm = ({ user, updateUserInfo }) => {
   };
 
   return (
-    <form className="perfil-form" onSubmit={handleSubmit}>
+    <form className="perfil-form-info" onSubmit={handleSubmit}>
       <div className="form-group-info">
         <label>Correo</label>
         <p className="readonly-field">{formData.correo}</p>

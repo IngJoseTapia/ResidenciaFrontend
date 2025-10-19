@@ -17,7 +17,7 @@ import Tutorial from "../tabs/Tutorial";
 
 import "../styles/Dashboard.css";
 
-const Dashboard = () => {
+const DashboardUser = () => {
   const { logout } = useAuth();
   const {
     user,
@@ -38,6 +38,7 @@ const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("bienvenida");
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [showNotifications, setShowNotifications] = useState(false);
+  const [closingNotifications, setClosingNotifications] = useState(false);
 
   const handleViewAllNotifications = useCallback(async () => {
     await reloadNotifications();
@@ -45,39 +46,57 @@ const Dashboard = () => {
     setShowNotifications(false);
   }, [reloadNotifications]);
 
+  const toggleNotifications = useCallback(() => {
+    if (showNotifications) {
+      // si está abierto, cerrar con animación
+      setClosingNotifications(true);
+      setTimeout(() => {
+        setShowNotifications(false);
+        setClosingNotifications(false);
+      }, 300); // duración del fade-out
+    } else {
+      // si está cerrado, abrir directamente
+      setShowNotifications(true);
+    }
+  }, [showNotifications]);
+
   // --- Funciones auxiliares ---
   const toggleSidebar = useCallback(() => setSidebarOpen(prev => !prev), []);
   const handleLogout = useCallback(() => {
-    logout();
-    navigate("/login");
+    logout(); // ya guarda el flag
+    navigate("/", { replace: true }); // redirige inmediatamente
   }, [logout, navigate]);
 
-  if (loadingUser) return <p>Cargando información del usuario...</p>;
+  if (loadingUser) {
+    return (
+      <div className="dashboard-skeleton">
+        <div className="skeleton-header"></div>
+        <div className="skeleton-card"></div>
+        <div className="skeleton-card"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="dashboard-wrapper">
-      {/* Sidebar */}
       <Sidebar
         sidebarOpen={sidebarOpen}
         toggleSidebar={toggleSidebar}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         handleLogout={handleLogout}
+        user={user}
       />
-
-      {/* Contenido principal */}
       <div className="main-content">
         <Topbar
           user={user}
-          onShowNotifications={() => setShowNotifications(true)}
+          onToggleNotifications={toggleNotifications} // ahora alterna abrir/cerrar
           onProfileClick={() => setActiveTab("perfil")}
           onLogout={handleLogout}
         />
-
         <div className="dashboard-cards">
           <section className="dashboard-content">
             {activeTab === "bienvenida" && <Bienvenida />}
-
             {activeTab === "perfil" && (
               <Perfil
                 user={user}
@@ -85,10 +104,8 @@ const Dashboard = () => {
                 changePassword={changePassword}
               />
             )}
-
             {activeTab === "tutorial" && <Tutorial />}
             {activeTab === "institucion" && <Institucion />}
-
             {activeTab === "notificaciones" && (
               <Notificaciones
                 notifications={notifications}
@@ -100,19 +117,21 @@ const Dashboard = () => {
           </section>
         </div>
       </div>
-
-      {/* Modal de notificaciones */}
       {showNotifications && (
         <NotificationModal
-          notifications={notifications}
+          notifications={notifications || []}
           loadingNotifications={loadingNotifications}
-          onClose={() => setShowNotifications(false)}
+          onClose={() => {
+            setClosingNotifications(true);
+            setTimeout(() => setShowNotifications(false), 300);
+          }}
+          closing={closingNotifications} // <-- para que haga el fade-out
           onViewAll={handleViewAllNotifications}
-          setActiveTab={setActiveTab} // <-- pasa esto para redirigir al tab
+          setActiveTab={setActiveTab}
         />
       )}
     </div>
   );
 };
 
-export default Dashboard;
+export default DashboardUser;

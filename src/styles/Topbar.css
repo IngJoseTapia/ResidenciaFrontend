@@ -24,3 +24,41 @@
 .icon-btn:hover {
   transform: scale(1.1); /* opcional: animación al pasar mouse */
 }
+
+/* Badge numérico de notificaciones */
+.icon-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notif-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background-color: #e63946; /* rojo brillante */
+  color: #fff;
+  border-radius: 50%;       /* ⚡ esto lo hace circular */
+  font-size: 0.65rem;
+  font-weight: bold;
+  width: 18px;              /* ⚡ ancho fijo igual al alto */
+  height: 18px;             /* ⚡ altura fija */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1;           /* evita desalineación vertical del número */
+  padding: 0;               /* ⚡ quitamos padding para no deformar el círculo */
+}
+
+
+@keyframes bounceIn {
+  0% { transform: scale(0); opacity: 0; }
+  60% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+.notif-badge {
+  animation: bounceIn 0.3s ease;
+}

@@ -9,6 +9,7 @@ import DashboardUser from "./pages/DashboardUser";
 import DashboardAdmin from "./pages/DashboardAdmin";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import GoogleCallback from "./pages/GoogleCallback";
+import Unauthorized from "./pages/Unauthorized";
 
 function App() {
   return (
@@ -29,7 +30,7 @@ function App() {
         <Route
           path="/user/dashboard"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute role="USER">
               <DashboardUser />
             </ProtectedRoute>
           }
@@ -54,7 +55,7 @@ function App() {
         />
 
         {/* Ruta para usuarios sin autorización */}
-        <Route path="/unauthorized" element={<h1>Acceso denegado</h1>} />
+        <Route path="/unauthorized" element={<Unauthorized />} />
 
         {/* Redirigir cualquier ruta desconocida al login */}
         <Route path="*" element={<Navigate to="/" replace />} />

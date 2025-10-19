@@ -13,16 +13,17 @@ export default function GoogleCallback() {
     const refreshToken = params.get("refreshToken");
     const error = params.get("error");
 
+    // Manejo de error de OAuth
     if (error) {
-      // Si hay error, lo pasamos directamente al contexto
       loginWithGoogle({ error });
-      navigate("/login", { replace: true });
-    } else if (token && refreshToken) {
+    } 
+    // Inicio de sesión exitoso
+    else if (token && refreshToken) {
       loginWithGoogle({ token, refreshToken });
-      navigate("/user/dashboard", { replace: true });
-    } else {
-      navigate("/login", { replace: true });
     }
+
+    // Redirigimos al login y dejamos que el useEffect en Login.jsx gestione la ruta según rol
+    navigate("/login", { replace: true });
   }, [navigate, loginWithGoogle]);
 
   return <p>Procesando inicio de sesión con Google...</p>;

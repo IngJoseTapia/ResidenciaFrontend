@@ -1,9 +1,27 @@
 /* //src/styles/InfoPersonalForm.css */
 /* Contenedor del formulario */
 /* Grupo de campos */
+.perfil-form-info {
+  background: #ededed;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow:
+    0 10px 20px rgba(0,0,0,0.2),
+    0 20px 40px rgba(0,0,0,0.1),
+    0 30px 60px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columnas iguales */
+  gap: 1.5rem 2rem;
+  box-sizing: border-box;
+  margin-bottom: 2rem;
+}
+
 .form-group-info {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .form-group-info label {
@@ -78,3 +96,17 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+/* Responsividad */
+@media (max-width: 1100px) {
+  .perfil-form-info {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .perfil-form-info {
+    grid-template-columns: 1fr !important;
+  }
+}
+

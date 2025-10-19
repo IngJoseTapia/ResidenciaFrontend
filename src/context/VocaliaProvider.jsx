@@ -1,10 +1,10 @@
 // src/context/VocaliaProvider.jsx
-import React, { useState, useCallback, useMemo, useEffect } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import { VocaliaContext } from "./VocaliaContext";
 import { vocaliaService } from "../services/vocaliaService";
 import { useAuth } from "../hooks/useAuth";
 
-export const VocaliaProvider = ({ children }) => {
+export const VocaliaProvider = ({ children, user }) => {
   const { jwt, refreshJwt, logout } = useAuth();
   const auth = useMemo(() => ({ jwt, refreshJwt, logout }), [jwt, refreshJwt, logout]);
 
@@ -29,6 +29,7 @@ export const VocaliaProvider = ({ children }) => {
   }, [auth]);
 
   const crearVocalia = async (dto) => {
+    if (user?.rol !== "ADMIN") return { success: false, message: "Acceso denegado" }; // ✅ validación de rol
     try {
       const data = await vocaliaService.crear(auth, dto);
 
@@ -54,6 +55,7 @@ export const VocaliaProvider = ({ children }) => {
   };
 
   const actualizarVocalia = async (id, dto) => {
+    if (user?.rol !== "ADMIN") return { success: false, message: "Acceso denegado" }; // ✅ validación de rol
     try {
       const data = await vocaliaService.actualizar(auth, id, dto);
 
@@ -73,6 +75,7 @@ export const VocaliaProvider = ({ children }) => {
   };
 
   const eliminarVocalia = async (id) => {
+    if (user?.rol !== "ADMIN") return { success: false, message: "Acceso denegado" }; // ✅ validación de rol
     try {
       const data = await vocaliaService.eliminar(auth, id);
 
@@ -89,11 +92,12 @@ export const VocaliaProvider = ({ children }) => {
     }
   };
 
+  // ✅ Cargar vocalías solo si el usuario es ADMIN
   useEffect(() => {
-    if (auth.jwt) {
+    if (auth.jwt && user?.rol === "ADMIN") {
       cargarVocalias();
     }
-  }, [auth.jwt, cargarVocalias]);
+  }, [auth.jwt, user?.rol, cargarVocalias]);
 
   return (
     <VocaliaContext.Provider

@@ -1,0 +1,35 @@
+/* src/styles/Pagination.css */
+
+.pagination-controls {
+  display: flex;
+  justify-content: center; /* Centrar los botones y el texto */
+  align-items: center;
+  margin: 20px 0;
+  gap: 10px; /* Espacio entre botones y texto */
+  font-family: Arial, sans-serif;
+}
+
+.pagination-controls button {
+  background-color: #4a90e2;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+}
+
+.pagination-controls button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination-controls button:hover:not(:disabled) {
+  background-color: #357ab8;
+}
+
+.pagination-controls span {
+  font-weight: bold;
+  font-size: 14px;
+}

@@ -1,14 +1,16 @@
-//src/components/Topbar.jsx
+// src/components/Topbar.jsx
 import { FaBell, FaUser, FaSignOutAlt } from "react-icons/fa";
+import { useNotifications } from "../hooks/useNotifications"; // ✅ Usa tu hook
 import "../styles/Topbar.css";
 
-/**
- * Topbar Component
- * Muestra el nombre del usuario y los accesos rápidos (notificaciones, perfil, cerrar sesión)
- */
-const Topbar = ({ user, onShowNotifications, onProfileClick, onLogout }) => {
+const Topbar = ({ user, onToggleNotifications, onProfileClick, onLogout }) => {
+  const { notifications, loadingNotifications } = useNotifications();
+
+  // 🔹 Calcula cuántas notificaciones no están leídas (según tu estructura)
+  const unreadCount = notifications?.filter((n) => !n.leida)?.length || 0;
+
   const actions = [
-    { icon: FaBell, onClick: onShowNotifications, label: "Notificaciones" },
+    { icon: FaBell, onClick: onToggleNotifications, label: "Notificaciones" },
     { icon: FaUser, onClick: onProfileClick, label: "Perfil" },
     { icon: FaSignOutAlt, onClick: onLogout, label: "Cerrar sesión" },
   ];
@@ -24,6 +26,8 @@ const Topbar = ({ user, onShowNotifications, onProfileClick, onLogout }) => {
       <div className="right-section">
         {actions.map((action, index) => {
           const IconComponent = action.icon;
+          const isBell = action.icon === FaBell;
+
           return (
             <button
               key={index}
@@ -32,7 +36,13 @@ const Topbar = ({ user, onShowNotifications, onProfileClick, onLogout }) => {
               className="icon-btn"
               aria-label={action.label}
             >
-              <IconComponent />
+              <div className="icon-wrapper">
+                <IconComponent />
+                {/* ✅ Mostrar badge solo si hay notificaciones no leídas */}
+                {isBell && !loadingNotifications && unreadCount > 0 && (
+                  <span className="notif-badge">{unreadCount}</span>
+                )}
+              </div>
             </button>
           );
         })}

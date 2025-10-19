@@ -1,6 +1,5 @@
 // src/components/NotificationModal.jsx
 import "../styles/Notifications.css";
-import { useState } from "react";
 import { useNotifications } from "../hooks/useNotifications";
 import { toast } from "react-hot-toast";
 import { FaTimes, FaKey, FaUserEdit } from "react-icons/fa";
@@ -11,9 +10,9 @@ const NotificationModal = ({
   onClose,
   onViewAll,
   setActiveTab,
+  closing,
 }) => {
   const { updateNotificationStatus } = useNotifications();
-  const [closing, setClosing] = useState(false);
 
   const handleGeneratePassword = async (notification) => {
     // 1️⃣ Marcar como leída/resuelta
@@ -27,7 +26,7 @@ const NotificationModal = ({
     toast("🔐 Redirigiendo al formulario de seguridad...");
 
     // 3️⃣ Cerrar modal
-    handleClose();
+    onClose();
   };
 
   const handleUpdateProfile = async (notification) => {
@@ -42,14 +41,11 @@ const NotificationModal = ({
     toast("🔐 Redirigiendo al formulario de información personal...");
 
     // 3️⃣ Cerrar modal
-    handleClose();
+    onClose();
   };
 
   const handleClose = () => {
-    setClosing(true);
-    setTimeout(() => {
-      onClose();
-    }, 300); // igual que la duración de fadeOut
+    onClose();
   };
 
   return (

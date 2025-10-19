@@ -1,9 +1,11 @@
 // src/pages/DashboardAdmin.jsx
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { useUser } from "../hooks/useUser";
 import { useNotifications } from "../hooks/useNotifications";
+import { VocaliaProvider } from "../context/VocaliaProvider";
+import { AsignacionProvider } from "../context/AsignacionProvider";
 
 import Topbar from "../components/Topbar";
 import Sidebar from "../components/Sidebar";
@@ -13,12 +15,12 @@ import Bienvenida from "../tabs/Bienvenida";
 import Notificaciones from "../tabs/Notificaciones";
 import Perfil from "../tabs/Perfil";
 import Vocalias from "../tabs/Vocalias";
+import UsuariosPendientes from "../tabs/UsuariosPendientes";
 
-import { fetchWithAuth } from "../utils/fetchWithAuth";
 import "../styles/Dashboard.css";
 
 const DashboardAdmin = () => {
-  const { logout, jwt, refreshJwt } = useAuth();
+  const { logout } = useAuth();
   const { user, loadingUser, updateUserInfo, changePassword } = useUser();
   const { notifications, loadingNotifications, reloadNotifications } = useNotifications();
   const navigate = useNavigate();
@@ -26,40 +28,27 @@ const DashboardAdmin = () => {
   const [activeTab, setActiveTab] = useState("bienvenida");
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [showNotifications, setShowNotifications] = useState(false);
+  const [closingNotifications, setClosingNotifications] = useState(false);
 
-  const [vocalias, setVocalias] = useState([]);
-  const [loadingVocalias, setLoadingVocalias] = useState(true);
-  const [errorVocalias, setErrorVocalias] = useState(null);
-
-  // --- Cargar vocalías solo si el usuario es admin y cambia el JWT ---
-  useEffect(() => {
-    if (!user || user.rol !== "ADMIN") return;
-
-    const fetchVocalias = async () => {
-      setLoadingVocalias(true);
-      setErrorVocalias(null);
-      try {
-        const data = await fetchWithAuth(
-          "http://localhost:8080/admin/vocalia",
-          { method: "GET" },
-          { jwt, refreshJwt, logout }
-        );
-        setVocalias(data || []);
-      } catch (err) {
-        setErrorVocalias(err.message);
-      } finally {
-        setLoadingVocalias(false);
-      }
-    };
-
-    fetchVocalias();
-  }, [user, jwt, refreshJwt, logout]);
+  const toggleNotifications = useCallback(() => {
+    if (showNotifications) {
+      // si está abierto, cerrar con animación
+      setClosingNotifications(true);
+      setTimeout(() => {
+        setShowNotifications(false);
+        setClosingNotifications(false);
+      }, 300);
+    } else {
+      // si está cerrado, abrir directamente
+      setShowNotifications(true);
+    }
+  }, [showNotifications]);
 
   // --- Handlers ---
   const toggleSidebar = useCallback(() => setSidebarOpen(prev => !prev), []);
   const handleLogout = useCallback(() => {
-    logout();
-    navigate("/login");
+    logout(); // ya guarda el flag
+    navigate("/", { replace: true }); // redirige inmediatamente
   }, [logout, navigate]);
 
   const handleViewAllNotifications = useCallback(async () => {
@@ -68,7 +57,15 @@ const DashboardAdmin = () => {
     setShowNotifications(false);
   }, [reloadNotifications]);
 
-  if (loadingUser) return <p>Cargando información del usuario...</p>;
+  if (loadingUser) {
+    return (
+      <div className="dashboard-skeleton">
+        <div className="skeleton-header"></div>
+        <div className="skeleton-card"></div>
+        <div className="skeleton-card"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="dashboard-wrapper">
@@ -84,7 +81,7 @@ const DashboardAdmin = () => {
       <div className="main-content">
         <Topbar
           user={user}
-          onShowNotifications={() => setShowNotifications(true)}
+          onToggleNotifications={toggleNotifications}
           onProfileClick={() => setActiveTab("perfil")}
           onLogout={handleLogout}
         />
@@ -102,11 +99,17 @@ const DashboardAdmin = () => {
             )}
 
             {activeTab === "vocalias" && (
-              <Vocalias
-                vocalias={vocalias}
-                loading={loadingVocalias}
-                error={errorVocalias}
-              />
+              <VocaliaProvider user={user}>
+                <Vocalias />
+              </VocaliaProvider>
+            )}
+
+            {activeTab === "usuariosPendientes" && (
+              <VocaliaProvider user={user}>
+                <AsignacionProvider user={user}>
+                  <UsuariosPendientes />
+                </AsignacionProvider>
+              </VocaliaProvider>
             )}
 
             {activeTab === "notificaciones" && (
@@ -125,9 +128,13 @@ const DashboardAdmin = () => {
         <NotificationModal
           notifications={notifications || []}
           loadingNotifications={loadingNotifications}
-          onClose={() => setShowNotifications(false)}
+          onClose={() => {
+            setClosingNotifications(true);
+            setTimeout(() => setShowNotifications(false), 300);
+          }}
+          closing={closingNotifications}
           onViewAll={handleViewAllNotifications}
-          setActiveTab={setActiveTab} // <-- pasa esto para redirigir al tab
+          setActiveTab={setActiveTab}
         />
       )}
     </div>

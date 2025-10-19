@@ -63,7 +63,7 @@ const PasswordForm = ({ user, changePassword }) => {
   };
 
   return (
-    <form className="perfil-form" onSubmit={handleSubmit}>
+    <form className="perfil-form-password" onSubmit={handleSubmit}>
       {user?.tieneContrasena && (
         <div className="password-group">
           <label>Contraseña actual</label>
