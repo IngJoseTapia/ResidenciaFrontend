@@ -55,6 +55,15 @@
   background-color: #3b82f6;
 }
 
+.sidebar .menu-item span,
+.sidebar .logout-btn span {
+  opacity: 0;
+  visibility: hidden;
+  width: 0;
+  overflow: hidden;
+  transition: opacity 0.2s ease, visibility 0s linear;
+}
+
 /* Muestra el texto al abrir (con retraso para coincidir con la animación de apertura del sidebar) */
 .sidebar.open .menu-item span,
 .sidebar.open .logout-btn span {

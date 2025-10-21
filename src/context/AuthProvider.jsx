@@ -160,7 +160,7 @@ export const AuthProvider = ({ children }) => {
         setUser({
           token: data.token,
           correo: decoded.email || decoded.sub,
-          role: decoded.rol || "USER",
+          role: (decoded.rol || "USER").toUpperCase(),
         });
       } catch (err) {
         console.warn("No se pudo decodificar token al loguear:", err);
@@ -194,7 +194,7 @@ export const AuthProvider = ({ children }) => {
         setUser({
           token: data.token,
           correo: decoded.email || decoded.sub,
-          role: decoded.rol || "USER",
+          role: (decoded.rol || "USER").toUpperCase(),
         });
       } catch (err) {
         console.warn("No se pudo decodificar token google:", err);

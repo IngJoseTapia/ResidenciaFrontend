@@ -1,0 +1,229 @@
+.usuarios-activos-container {
+  padding: 2rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  
+  /* 🔹 CAMBIO CRÍTICO: Usar Grid en lugar de Flex */
+  display: grid;
+  grid-template-columns: minmax(0, 1fr); /* 🔹 Fuerza la contención */
+  grid-template-rows: auto 1fr auto;
+  gap: 1rem;
+  
+  overflow: hidden;
+  min-height: 0;
+  min-width: 0;
+}
+
+.usuarios-activos-title {
+  font-size: 1.6rem;
+  color: #000d1f;
+  margin-bottom: 1rem;
+}
+
+.activos-form-table {
+  background: #ededed;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow:
+    0 10px 20px rgba(0,0,0,0.2),
+    0 20px 40px rgba(0,0,0,0.1),
+    0 30px 60px rgba(0,0,0,0.1);
+  /* 🔹 CAMBIOS CRÍTICOS */
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
+  
+  /* 🔹 FUERZA la compresión */
+  min-width: 0 !important;
+  display: block;
+  
+  /* 🔹 NUEVO: Asegura que no se expanda */
+  flex-shrink: 1;
+  position: relative;
+}
+
+.usuarios-activos-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 2px solid #0056b3;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.usuarios-activos-table th {
+  background-color: #0056b3;
+  padding: 10px 12px;
+  color: #ffffff;
+  font-weight: bold;
+  text-transform: uppercase;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.usuarios-activos-table td {
+  border: 1.5px solid #0056b3; /* Bordes internos más visibles */
+  padding: 10px 12px;
+  text-align: left;
+  transition: background-color 0.3s ease;
+  overflow: hidden;
+}
+
+.usuarios-activos-table tr {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* Filas alternadas */
+.usuarios-activos-table tr:nth-child(even) {
+  background-color: #dceafc;
+}
+
+/* Hover */
+.usuarios-activos-table tr:hover {
+  background-color: #adcdfe;
+  transition: background-color 0.3s ease;
+}
+
+/* Centrar botones */
+.activos-action-cell {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.activos-btn {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.activos-btn.editar {
+  background-color: #3498db;
+  color: white;
+}
+
+.activos-btn.editar:hover {
+  background-color: #2980b9;
+  transform: scale(1.1);
+}
+
+.activos-btn svg {
+  font-size: 18px;
+}
+
+.activos-btn-guardar {
+  background-color: #28a745;
+  color: white;
+}
+
+.activos-btn-cancelar {
+  background-color: #dc3545;
+  color: white;
+}
+
+.edit-role select {
+  padding: 0.3rem;
+  border-radius: 0.3rem;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  color: #555;
+}
+
+.spinner {
+  margin-right: 0.5rem;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.mensaje {
+  margin-top: 1rem;
+  background: #e9ffe9;
+  border-left: 4px solid #28a745;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+}
+
+.paginacion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.paginacion button {
+  margin: 0 0.5rem;
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 0.5rem 0.8rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+}
+
+.paginacion button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* Scrollbar personalizado */
+.usuarios-activos-form-table::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+.usuarios-activos-form-table::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 8px;
+}
+
+.usuarios-activos-form-table::-webkit-scrollbar-thumb {
+  background: #000d1f;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+
+.usuarios-activos-form-table::-webkit-scrollbar-thumb:hover {
+  background: #ff008c;
+}
+
+@media (max-width: 768px) {
+  .usuarios-activos-container {
+    padding: 1rem;
+  }
+
+  .usuarios-activos-form-table {
+    padding: 1rem;
+  }
+
+  .usuarios-activos-table th,
+  .usuarios-activos-table td {
+    padding: 6px 8px;
+    font-size: 0.9rem;
+  }
+
+  .usuarios-activos-title {
+    font-size: 1.3rem;
+  }
+}
+

@@ -8,22 +8,36 @@ import {
   FaUser,
   FaBuilding,
   FaUsers,
-  FaSpinner
+  FaSpinner,
+  FaUserCheck
 } from "react-icons/fa";
-import { useUser } from "../hooks/useUser";
+import { useEffect, useState } from "react";
 import "../styles/Sidebar.css";
 
 const MENU_ITEMS = [
-  { id: "bienvenida", icon: FaHome, label: "Dashboard", roles: ["ADMIN", "USER"] },
-  { id: "perfil", icon: FaUser, label: "Mi Información", roles: ["ADMIN", "USER"] },
+  { id: "bienvenida", icon: FaHome, label: "Dashboard", roles: ["ADMIN", "VOCAL", "USER"] },
+  { id: "perfil", icon: FaUser, label: "Mi Información", roles: ["ADMIN", "VOCAL", "USER"] },
   { id: "vocalias", icon: FaBuilding, label: "Vocalías", roles: ["ADMIN"] },
   { id: "usuariosPendientes", icon: FaUsers, label: "Usuarios Pendientes", roles: ["ADMIN"] },
   { id: "tutorial", icon: FaBook, label: "Cómo usar", roles: ["USER"] },
   { id: "institucion", icon: FaUniversity, label: "09 Junta Distrital Ejecutiva", roles: ["USER"] },
+  { id: "usuariosActivos", icon: FaUserCheck, label: "Usuarios Activos", roles: ["ADMIN", "VOCAL"] },
 ];
 
-const Sidebar = ({ sidebarOpen, toggleSidebar, activeTab, setActiveTab, handleLogout }) => {
-  const { user, loadingUser } = useUser();
+const Sidebar = ({ sidebarOpen, toggleSidebar, activeTab, setActiveTab, handleLogout, user, loadingUser }) => {
+  const [showText, setShowText] = useState(sidebarOpen);
+
+  useEffect(() => {
+    let timer;
+    if (sidebarOpen) {
+      // Espera a que termine la animación (0.3s)
+      timer = setTimeout(() => setShowText(true), 300);
+    } else {
+      // Oculta el texto inmediatamente al cerrar
+      setShowText(false);
+    }
+    return () => clearTimeout(timer);
+  }, [sidebarOpen]);
 
   if (loadingUser) {
     return (
@@ -65,7 +79,7 @@ const Sidebar = ({ sidebarOpen, toggleSidebar, activeTab, setActiveTab, handleLo
               onClick={() => setActiveTab(item.id)}
             >
               <IconComponent className={sidebarOpen ? "icon-normal" : "icon-large"} />
-              {sidebarOpen && <span>{item.label}</span>}
+              {showText && <span>{item.label}</span>}
             </button>
           );
         })}
@@ -75,7 +89,7 @@ const Sidebar = ({ sidebarOpen, toggleSidebar, activeTab, setActiveTab, handleLo
       <div className="sidebar-footer">
         <button type="button" onClick={handleLogout} className="logout-btn" aria-label="Cerrar sesión">
           <FaSignOutAlt className={sidebarOpen ? "icon-normal" : "icon-large"} />
-          {sidebarOpen && <span>Cerrar sesión</span>}
+          {showText && <span>Cerrar sesión</span>}
         </button>
       </div>
     </aside>

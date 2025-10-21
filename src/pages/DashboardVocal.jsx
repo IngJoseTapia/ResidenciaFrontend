@@ -1,44 +1,53 @@
-//src/pages/DashboardUser.jsx
+//src/pages/DashboardVocal.jsx
 import React, { useState, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { useUser } from "../hooks/useUser";
 import { useNotifications } from "../hooks/useNotifications";
-import { useNavigate } from "react-router-dom";
 
+// Providers compartidos
+import { VocaliaProvider } from "../context/VocaliaProvider";
+import { AsignacionProvider } from "../context/AsignacionProvider";
+import { UsuariosActivosProvider } from "../context/UsuariosActivosProvider";
+
+// Componentes base
 import Topbar from "../components/Topbar";
 import Sidebar from "../components/Sidebar";
 import NotificationModal from "../components/NotificationModal";
 
+// Tabs
 import Bienvenida from "../tabs/Bienvenida";
 import Perfil from "../tabs/Perfil";
 import Notificaciones from "../tabs/Notificaciones";
-import Institucion from "../tabs/Institucion";
-import Tutorial from "../tabs/Tutorial";
+import Vocalias from "../tabs/Vocalias";
+import UsuariosPendientes from "../tabs/UsuariosPendientes";
+import UsuariosActivos from "../tabs/UsuariosActivos";
 
 import "../styles/Dashboard.css";
 
-const DashboardUser = () => {
+const DashboardVocal = () => {
   const { logout } = useAuth();
-  const {
-    user,
-    loadingUser,
-    updateUserInfo,
-    changePassword,
-  } = useUser();
-
-  const {
-    notifications,
-    loadingNotifications,
-    reloadNotifications,
-  } = useNotifications();
-
+  const { user, loadingUser, updateUserInfo, changePassword } = useUser();
+  const { notifications, loadingNotifications, reloadNotifications } = useNotifications();
   const navigate = useNavigate();
 
-  // --- Estados ---
   const [activeTab, setActiveTab] = useState("bienvenida");
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [showNotifications, setShowNotifications] = useState(false);
   const [closingNotifications, setClosingNotifications] = useState(false);
+
+  // --- Lógica de notificaciones ---
+  const toggleNotifications = useCallback(() => {
+    if (showNotifications) {
+      setClosingNotifications(true);
+      setTimeout(() => {
+        setShowNotifications(false);
+        setClosingNotifications(false);
+      }, 300);
+    } else {
+      setShowNotifications(true);
+    }
+  }, [showNotifications]);
 
   const handleViewAllNotifications = useCallback(async () => {
     await reloadNotifications();
@@ -46,25 +55,11 @@ const DashboardUser = () => {
     setShowNotifications(false);
   }, [reloadNotifications]);
 
-  const toggleNotifications = useCallback(() => {
-    if (showNotifications) {
-      // si está abierto, cerrar con animación
-      setClosingNotifications(true);
-      setTimeout(() => {
-        setShowNotifications(false);
-        setClosingNotifications(false);
-      }, 300); // duración del fade-out
-    } else {
-      // si está cerrado, abrir directamente
-      setShowNotifications(true);
-    }
-  }, [showNotifications]);
-
-  // --- Funciones auxiliares ---
+  // --- Control de sidebar y logout ---
   const toggleSidebar = useCallback(() => setSidebarOpen(prev => !prev), []);
   const handleLogout = useCallback(() => {
-    logout(); // ya guarda el flag
-    navigate("/", { replace: true }); // redirige inmediatamente
+    logout();
+    navigate("/", { replace: true });
   }, [logout, navigate]);
 
   if (loadingUser) {
@@ -79,6 +74,7 @@ const DashboardUser = () => {
 
   return (
     <div className="dashboard-wrapper">
+      {/* Sidebar con tabs dinámicos */}
       <Sidebar
         sidebarOpen={sidebarOpen}
         toggleSidebar={toggleSidebar}
@@ -88,16 +84,20 @@ const DashboardUser = () => {
         user={user}
         loadingUser={loadingUser}
       />
+
+      {/* Contenido principal */}
       <div className="main-content">
         <Topbar
           user={user}
-          onToggleNotifications={toggleNotifications} // ahora alterna abrir/cerrar
+          onToggleNotifications={toggleNotifications}
           onProfileClick={() => setActiveTab("perfil")}
           onLogout={handleLogout}
         />
+
         <div className="dashboard-cards">
           <section className="dashboard-content">
             {activeTab === "bienvenida" && <Bienvenida />}
+
             {activeTab === "perfil" && (
               <Perfil
                 user={user}
@@ -105,8 +105,27 @@ const DashboardUser = () => {
                 changePassword={changePassword}
               />
             )}
-            {activeTab === "tutorial" && <Tutorial />}
-            {activeTab === "institucion" && <Institucion />}
+
+            {activeTab === "vocalias" && (
+              <VocaliaProvider user={user}>
+                <Vocalias />
+              </VocaliaProvider>
+            )}
+
+            {activeTab === "usuariosPendientes" && (
+              <VocaliaProvider user={user}>
+                <AsignacionProvider user={user}>
+                  <UsuariosPendientes />
+                </AsignacionProvider>
+              </VocaliaProvider>
+            )}
+
+            {activeTab === "usuariosActivos" && (
+              <UsuariosActivosProvider user={user}>
+                <UsuariosActivos />
+              </UsuariosActivosProvider>
+            )}
+
             {activeTab === "notificaciones" && (
               <Notificaciones
                 notifications={notifications}
@@ -118,6 +137,8 @@ const DashboardUser = () => {
           </section>
         </div>
       </div>
+
+      {/* Modal de notificaciones */}
       {showNotifications && (
         <NotificationModal
           notifications={notifications || []}
@@ -126,7 +147,7 @@ const DashboardUser = () => {
             setClosingNotifications(true);
             setTimeout(() => setShowNotifications(false), 300);
           }}
-          closing={closingNotifications} // <-- para que haga el fade-out
+          closing={closingNotifications}
           onViewAll={handleViewAllNotifications}
           setActiveTab={setActiveTab}
         />
@@ -135,4 +156,4 @@ const DashboardUser = () => {
   );
 };
 
-export default DashboardUser;
+export default DashboardVocal;

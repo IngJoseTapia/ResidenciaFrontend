@@ -6,6 +6,7 @@ import { useUser } from "../hooks/useUser";
 import { useNotifications } from "../hooks/useNotifications";
 import { VocaliaProvider } from "../context/VocaliaProvider";
 import { AsignacionProvider } from "../context/AsignacionProvider";
+import { UsuariosActivosProvider } from "../context/UsuariosActivosProvider";
 
 import Topbar from "../components/Topbar";
 import Sidebar from "../components/Sidebar";
@@ -16,6 +17,7 @@ import Notificaciones from "../tabs/Notificaciones";
 import Perfil from "../tabs/Perfil";
 import Vocalias from "../tabs/Vocalias";
 import UsuariosPendientes from "../tabs/UsuariosPendientes";
+import UsuariosActivos from "../tabs/UsuariosActivos";
 
 import "../styles/Dashboard.css";
 
@@ -76,6 +78,7 @@ const DashboardAdmin = () => {
         setActiveTab={setActiveTab}
         handleLogout={handleLogout}
         user={user}
+        loadingUser={loadingUser}
       />
 
       <div className="main-content">
@@ -110,6 +113,12 @@ const DashboardAdmin = () => {
                   <UsuariosPendientes />
                 </AsignacionProvider>
               </VocaliaProvider>
+            )}
+
+            {activeTab === "usuariosActivos" && (
+              <UsuariosActivosProvider user={user}>
+                <UsuariosActivos />
+              </UsuariosActivosProvider>
             )}
 
             {activeTab === "notificaciones" && (
