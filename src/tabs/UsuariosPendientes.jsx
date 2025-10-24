@@ -1,5 +1,5 @@
 // src/tabs/UsuariosPendientes.jsx
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaSpinner, FaUserCheck } from "react-icons/fa";
 import Pagination from "../components/Pagination";
 import "../styles/UsuariosPendientes.css";
@@ -15,6 +15,7 @@ const UsuariosPendientes = () => {
     pageInfo,
     fetchUsuariosPendientes,
     asignarVocaliaAUsuario,
+    eliminarUsuarioPendientes,
     loading,
     error,
   } = useAsignacion();
@@ -28,9 +29,14 @@ const UsuariosPendientes = () => {
   const [modalMessage, setModalMessage] = useState("");
   const [modalMessageType, setModalMessageType] = useState("");
   const [loadingAssign, setLoadingAssign] = useState(false);
+  const [loadingDelete, setLoadingDelete] = useState(false);
+
+  // 🔹 Estados para el modal de confirmación
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [usuarioToDelete, setUsuarioToDelete] = useState(null);
 
   const [currentPage, setCurrentPage] = useState(0);
-  const pageSize = 20;
+  const pageSize = 10;
 
   // 🔹 Cargar datos al montar el componente o cambiar de página
   useEffect(() => {
@@ -73,6 +79,50 @@ const UsuariosPendientes = () => {
       setModalMessageType("error");
     } finally {
       setLoadingAssign(false);
+    }
+  };
+
+  /** 🔹 Abre el modal de confirmación */
+  const handleConfirmDelete = (usuario) => {
+    setUsuarioToDelete(usuario);
+    setConfirmOpen(true);
+  };
+
+  /** 🔹 Cancela el modal de confirmación */
+  const handleCancelConfirm = () => {
+    setUsuarioToDelete(null);
+    setConfirmOpen(false);
+  };
+
+  /** 🔹 Confirmar eliminación */
+  const confirmDelete = async () => {
+    if (!usuarioToDelete) return;
+
+    // 🔹 Cerrar el modal de confirmación inmediatamente
+    setConfirmOpen(false);
+
+    setLoadingDelete(true);
+    setModalMessage("Eliminando usuario...");
+    setModalMessageType("info");
+
+    try {
+      const res = await eliminarUsuarioPendientes(usuarioToDelete.id);
+
+      setModalMessage(res?.mensaje || "Usuario eliminado correctamente");
+      setModalMessageType("success");
+
+      // 🔹 Actualizamos la lista
+      fetchUsuariosPendientes(currentPage, pageSize);
+
+      // 🔹 Ocultar mensaje y cerrar modal después
+      setTimeout(() => setModalMessage(""), 5000);
+      setTimeout(() => handleCloseModal(), 6000);
+    } catch (err) {
+      setModalMessage(err.message || "Error al eliminar usuario");
+      setModalMessageType("error");
+      setTimeout(() => setModalMessage(""), 10000);
+    } finally {
+      setLoadingDelete(false);
     }
   };
 
@@ -149,7 +199,7 @@ const UsuariosPendientes = () => {
         </>
       )}
 
-      {/* 🔹 Modal de asignación */}
+      {/* 🔹 Modal principal */}
       {modalOpen && selectedUsuario && (
         <div className="modal">
           <div className="modal-content edit">
@@ -188,7 +238,11 @@ const UsuariosPendientes = () => {
               )}
 
               <div className="modal-buttons">
-                <button type="submit" className="btn-guardar" disabled={loadingAssign}>
+                <button
+                  type="submit"
+                  className="btn-guardar"
+                  disabled={loadingAssign}
+                >
                   {loadingAssign ? (
                     <>
                       <FaSpinner className="spinner" /> Procesando...
@@ -197,11 +251,60 @@ const UsuariosPendientes = () => {
                     "Asignar"
                   )}
                 </button>
-                <button type="button" className="btn-cancelar" onClick={handleCloseModal}>
+
+                <button
+                  type="button"
+                  className="btn-eliminar"
+                  onClick={() => handleConfirmDelete(selectedUsuario)}
+                  disabled={loadingDelete}
+                >
+                  Eliminar Usuario
+                </button>
+
+                <button
+                  type="button"
+                  className="btn-cancelar"
+                  onClick={handleCloseModal}
+                >
                   Cerrar
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* 🔹 Modal de confirmación */}
+      {confirmOpen && usuarioToDelete && (
+        <div className="modal">
+          <div className="modal-content confirm">
+            <h3>¿Eliminar Usuario?</h3>
+            <p>
+              ¿Seguro que deseas eliminar al usuario{" "}
+              <strong>{usuarioToDelete.nombre}</strong>?
+            </p>
+            <div className="confirm-buttons">
+              <button
+                className="btn-cancelar"
+                onClick={handleCancelConfirm}
+                disabled={loadingDelete}
+              >
+                Cancelar
+              </button>
+              <button
+                className="btn-eliminar"
+                onClick={confirmDelete}
+                disabled={loadingDelete}
+              >
+                {loadingDelete ? (
+                  <>
+                    <FaSpinner className="spinner" /> Eliminando...
+                  </>
+                ) : (
+                  "Eliminar"
+                )}
+              </button>
+            </div>
           </div>
         </div>
       )}

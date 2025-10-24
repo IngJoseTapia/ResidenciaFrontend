@@ -1,4 +1,4 @@
-// src/context/useVocalia.js
+// src/hooks/useVocalia.js
 import { useContext } from "react";
 import { VocaliaContext } from "../context/VocaliaContext";
 

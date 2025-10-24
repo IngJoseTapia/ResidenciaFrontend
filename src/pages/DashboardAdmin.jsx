@@ -7,6 +7,7 @@ import { useNotifications } from "../hooks/useNotifications";
 import { VocaliaProvider } from "../context/VocaliaProvider";
 import { AsignacionProvider } from "../context/AsignacionProvider";
 import { UsuariosActivosProvider } from "../context/UsuariosActivosProvider";
+import { ConsultaUsuariosProvider } from "../context/ConsultaUsuariosProvider";
 
 import Topbar from "../components/Topbar";
 import Sidebar from "../components/Sidebar";
@@ -18,6 +19,7 @@ import Perfil from "../tabs/Perfil";
 import Vocalias from "../tabs/Vocalias";
 import UsuariosPendientes from "../tabs/UsuariosPendientes";
 import UsuariosActivos from "../tabs/UsuariosActivos";
+import ConsultaUsuarios from "../tabs/ConsultaUsuarios";
 
 import "../styles/Dashboard.css";
 
@@ -119,6 +121,12 @@ const DashboardAdmin = () => {
               <UsuariosActivosProvider user={user}>
                 <UsuariosActivos />
               </UsuariosActivosProvider>
+            )}
+
+            {activeTab === "consultaUsuarios" && (
+              <ConsultaUsuariosProvider>
+                <ConsultaUsuarios />
+              </ConsultaUsuariosProvider>
             )}
 
             {activeTab === "notificaciones" && (

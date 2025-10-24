@@ -45,3 +45,25 @@ export const asignarVocalia = async (usuarioId, vocaliaId, authContext) => {
     throw err;
   }
 };
+
+/**
+ * Elimina un usuario con status PENDIENTE
+ * @param {number} usuarioId - ID del usuario a eliminar
+ * @param {object} authContext - { jwt, refreshJwt, logout }
+ * @returns {Promise<object>} - respuesta del backend
+ */
+export const eliminarUsuarioPendiente = async (usuarioId, authContext) => {
+  try {
+    return await fetchWithAuth(
+      `http://localhost:8080/admin/eliminar-pendiente/${usuarioId}`,
+      {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" }
+      },
+      authContext
+    );
+  } catch (err) {
+    console.error("Error en eliminarUsuarioPendiente:", err);
+    throw err;
+  }
+};

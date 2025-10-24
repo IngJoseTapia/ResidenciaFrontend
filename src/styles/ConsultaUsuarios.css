@@ -1,4 +1,4 @@
-.usuarios-activos-container {
+.consulta-usuarios-container {
   padding: 2rem;
   width: 100%;
   max-width: 100%;
@@ -15,13 +15,13 @@
   min-width: 0;
 }
 
-.usuarios-activos-title {
+.consulta-usuarios-title {
   font-size: 1.6rem;
   color: #000d1f;
   margin-bottom: 1rem;
 }
 
-.activos-form-table {
+.consulta-form-table {
   background: #ededed;
   border-radius: 12px;
   padding: 2rem;
@@ -46,7 +46,7 @@
   position: relative;
 }
 
-.usuarios-activos-table {
+.consulta-usuarios-table {
   width: 100%;
   border-collapse: collapse;
   border: 2px solid #0056b3;
@@ -54,10 +54,10 @@
   overflow: hidden;
 }
 
-.usuarios-activos-table th {
+.consulta-usuarios-table th {
   background-color: #0056b3;
   padding: 10px 12px;
-  color: #ffffff;
+  color: white;
   font-weight: bold;
   text-transform: uppercase;
   position: sticky;
@@ -65,8 +65,8 @@
   z-index: 2;
 }
 
-.usuarios-activos-table td {
-  border: 1.5px solid #0056b3; /* Bordes internos más visibles */
+.consulta-usuarios-table td {
+  border: 1.5px solid #0056b3;
   padding: 10px 12px;
   text-align: left;
   color: #000;
@@ -74,29 +74,34 @@
   overflow: hidden;
 }
 
-.usuarios-activos-table tr {
+.consulta-usuarios-table tr {
   background-color: #ffffff;
   color: #000000;
 }
 
-/* Filas alternadas */
-.usuarios-activos-table tr:nth-child(even) {
+.consulta-usuarios-table tr:nth-child(even) {
   background-color: #dceafc;
 }
 
-/* Hover */
-.usuarios-activos-table tr:hover {
+.consulta-usuarios-table tr:hover {
   background-color: #adcdfe;
-  transition: background-color 0.3s ease;
 }
 
-/* Centrar botones */
-.activos-action-cell {
-  text-align: center;
-  vertical-align: middle;
+.consulta-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  color: #555;
 }
 
-.activos-btn {
+.consulta-spinner {
+  margin-right: 0.5rem;
+  animation: spin 1s linear infinite;
+}
+
+/* Botones */
+.btn-icon {
   width: 36px;
   height: 36px;
   border: none;
@@ -109,46 +114,52 @@
   transition: all 0.2s ease-in-out;
 }
 
-.activos-btn.editar {
+.btn-icon.action {
   background-color: #3498db;
   color: white;
 }
 
-.activos-btn.editar:hover {
+.btn-icon.action:hover {
   background-color: #2980b9;
   transform: scale(1.1);
 }
 
-.activos-btn svg {
+.btn-icon svg {
   font-size: 18px;
 }
 
-.activos-btn-guardar {
-  background-color: #28a745;
-  color: white;
-}
-
-.activos-btn-cancelar {
-  background-color: #dc3545;
-  color: white;
-}
-
-.edit-role select {
-  padding: 0.3rem;
-  border-radius: 0.3rem;
-}
-
-.loading {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 500;
-  color: #555;
+.no-data {
+  text-align: center;
+  font-style: italic;
+  color: #333;
 }
 
 .spinner {
-  margin-right: 0.5rem;
   animation: spin 1s linear infinite;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.btn-eliminar {
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-eliminar:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }
 
 @keyframes spin {
@@ -157,74 +168,22 @@
   }
 }
 
-.mensaje {
-  margin-top: 1rem;
-  background: #e9ffe9;
-  border-left: 4px solid #28a745;
-  padding: 0.75rem;
-  border-radius: 0.5rem;
-}
-
-.paginacion {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 1rem;
-}
-
-.paginacion button {
-  margin: 0 0.5rem;
-  background: #007bff;
-  color: white;
-  border: none;
-  padding: 0.5rem 0.8rem;
-  border-radius: 0.4rem;
-  cursor: pointer;
-}
-
-.paginacion button:disabled {
-  background: #ccc;
-  cursor: not-allowed;
-}
-
-/* Scrollbar personalizado */
-.usuarios-activos-form-table::-webkit-scrollbar {
-  height: 8px;
-  width: 8px;
-}
-
-.usuarios-activos-form-table::-webkit-scrollbar-track {
-  background: #f0f0f0;
-  border-radius: 8px;
-}
-
-.usuarios-activos-form-table::-webkit-scrollbar-thumb {
-  background: #000d1f;
-  border-radius: 8px;
-  transition: background 0.3s;
-}
-
-.usuarios-activos-form-table::-webkit-scrollbar-thumb:hover {
-  background: #ff008c;
-}
-
 @media (max-width: 768px) {
-  .usuarios-activos-container {
+  .consulta-usuarios-container {
     padding: 1rem;
   }
 
-  .usuarios-activos-form-table {
+  .consulta-form-table {
     padding: 1rem;
   }
 
-  .usuarios-activos-table th,
-  .usuarios-activos-table td {
+  .consulta-usuarios-table th,
+  .consulta-usuarios-table td {
     padding: 6px 8px;
     font-size: 0.9rem;
   }
 
-  .usuarios-activos-title {
+  .consulta-usuarios-title {
     font-size: 1.3rem;
   }
 }
-

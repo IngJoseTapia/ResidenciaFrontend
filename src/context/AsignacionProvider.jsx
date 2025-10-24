@@ -1,7 +1,7 @@
 // src/context/AsignacionProvider.jsx
 import { useState, useCallback, useEffect, useMemo } from "react";
 import { AsignacionContext } from "./AsignacionContext";
-import { getUsuariosPendientes, asignarVocalia } from "../services/asignacionService";
+import { getUsuariosPendientes, asignarVocalia, eliminarUsuarioPendiente } from "../services/asignacionService";
 import { useAuth } from "../hooks/useAuth";
 
 
@@ -68,6 +68,29 @@ export const AsignacionProvider = ({ children, user }) => {
     [auth, user]
   );
 
+  const eliminarUsuarioPendientes = useCallback(
+    async (usuarioId) => {
+      if (user?.rol !== "ADMIN") {
+        throw new Error("Acceso denegado: solo los administradores pueden eliminar usuarios.");
+      }
+
+      try {
+        const res = await eliminarUsuarioPendiente(usuarioId, auth);
+
+        // 🔹 Eliminamos el usuario de la lista local
+        setUsuariosPendientes(prev =>
+          prev.filter(usuario => usuario.id !== usuarioId)
+        );
+
+        return res; // 🔹 Retornamos respuesta del backend
+      } catch (err) {
+        console.error("Error al eliminar usuario pendiente:", err);
+        throw err;
+      }
+    },
+    [auth, user]
+  );
+
   useEffect(() => {
     if (auth.jwt && user?.rol === "ADMIN") {
       fetchUsuariosPendientes();
@@ -83,6 +106,7 @@ export const AsignacionProvider = ({ children, user }) => {
         error,
         fetchUsuariosPendientes,
         asignarVocaliaAUsuario,
+        eliminarUsuarioPendientes, // ✅ nueva función
       }}
     >
       {children}

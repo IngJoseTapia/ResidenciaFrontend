@@ -1,4 +1,4 @@
-// src/context/useUsuariosActivos.js
+// src/hooks/useUsuariosActivos.js
 import { useContext } from "react";
 import { UsuariosActivosContext } from "../context/UsuariosActivosContext";
 
