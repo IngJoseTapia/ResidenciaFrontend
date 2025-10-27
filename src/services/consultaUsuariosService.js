@@ -46,3 +46,72 @@ export const eliminarUsuarioInactivo = async (usuarioId, authContext) => {
     throw err;
   }
 };
+
+/**
+ * Cambia el correo electrónico de un usuario
+ * @param {number} usuarioId
+ * @param {string} nuevoCorreo
+ * @param {object} authContext
+ */
+export const cambiarCorreoUsuario = async (usuarioId, nuevoCorreo, authContext) => {
+  try {
+    return await fetchWithAuth(
+      `${import.meta.env.VITE_API_URL}/admin/usuario/${usuarioId}/correo`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nuevoCorreo }),
+      },
+      authContext
+    );
+  } catch (err) {
+    console.error("Error en cambiarCorreoUsuario:", err);
+    throw err;
+  }
+};
+
+/**
+ * Cambia la contraseña de un usuario
+ * @param {number} usuarioId
+ * @param {string} nuevaContrasena
+ * @param {object} authContext
+ */
+export const cambiarContrasenaUsuario = async (usuarioId, nuevaContrasena, authContext) => {
+  try {
+    return await fetchWithAuth(
+      `${import.meta.env.VITE_API_URL}/admin/usuario/${usuarioId}/password`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nuevaPassword: nuevaContrasena })
+      },
+      authContext
+    );
+  } catch (err) {
+    console.error("Error en cambiarContrasenaUsuario:", err);
+    throw err;
+  }
+};
+
+/**
+ * Cambia el status (ACTIVO/INACTIVO) de un usuario
+ * @param {number} usuarioId
+ * @param {string} nuevoStatus - Puede ser "ACTIVO" o "INACTIVO"
+ * @param {object} authContext
+ */
+export const cambiarStatusUsuario = async (usuarioId, nuevoStatus, authContext) => {
+  try {
+    return await fetchWithAuth(
+      `${import.meta.env.VITE_API_URL}/admin/usuario/${usuarioId}/status`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nuevoStatus }),
+      },
+      authContext
+    );
+  } catch (err) {
+    console.error("Error en cambiarStatusUsuario:", err);
+    throw err;
+  }
+};

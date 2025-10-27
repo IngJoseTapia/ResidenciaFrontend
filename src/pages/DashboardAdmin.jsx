@@ -8,6 +8,7 @@ import { VocaliaProvider } from "../context/VocaliaProvider";
 import { AsignacionProvider } from "../context/AsignacionProvider";
 import { UsuariosActivosProvider } from "../context/UsuariosActivosProvider";
 import { ConsultaUsuariosProvider } from "../context/ConsultaUsuariosProvider";
+import { LogsSistemaProvider } from "../context/LogsSistemaProvider";
 
 import Topbar from "../components/Topbar";
 import Sidebar from "../components/Sidebar";
@@ -20,6 +21,7 @@ import Vocalias from "../tabs/Vocalias";
 import UsuariosPendientes from "../tabs/UsuariosPendientes";
 import UsuariosActivos from "../tabs/UsuariosActivos";
 import ConsultaUsuarios from "../tabs/ConsultaUsuarios";
+import ConsultaLogs from "../tabs/ConsultaLogs";
 
 import "../styles/Dashboard.css";
 
@@ -127,6 +129,12 @@ const DashboardAdmin = () => {
               <ConsultaUsuariosProvider>
                 <ConsultaUsuarios />
               </ConsultaUsuariosProvider>
+            )}
+
+            {activeTab === "consultaLogs" && (
+              <LogsSistemaProvider>
+                <ConsultaLogs />
+              </LogsSistemaProvider>
             )}
 
             {activeTab === "notificaciones" && (

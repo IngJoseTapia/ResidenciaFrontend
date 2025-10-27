@@ -21,11 +21,11 @@ export const UsuariosActivosProvider = ({ children }) => {
    * 🔹 Cargar usuarios activos
    */
   const fetchUsuarios = useCallback(
-    async (page = 0) => {
+    async (page = 0, size = 10) => {
       setLoading(true);
       setError(null);
       try {
-        const data = await getUsuariosActivos(page, 10, auth);
+        const data = await getUsuariosActivos(page, size, auth);
         setUsuarios(data.content || []);
         setPageInfo({ page: data.number, totalPages: data.totalPages });
       } catch (err) {

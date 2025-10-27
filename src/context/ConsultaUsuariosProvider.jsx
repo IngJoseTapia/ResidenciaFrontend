@@ -4,6 +4,9 @@ import { ConsultaUsuariosContext } from "./ConsultaUsuariosContext";
 import {
   getConsultaUsuarios,
   eliminarUsuarioInactivo,
+  cambiarCorreoUsuario,
+  cambiarContrasenaUsuario,
+  cambiarStatusUsuario,
 } from "../services/consultaUsuariosService";
 import { useAuth } from "../hooks/useAuth";
 
@@ -55,7 +58,6 @@ export const ConsultaUsuariosProvider = ({ children }) => {
   /**
    * 🔹 Eliminar usuario inactivo
    */
-  // src/context/ConsultaUsuariosProvider.jsx
   const eliminarUsuario = useCallback(
     async (usuarioId) => {
       try {
@@ -75,6 +77,45 @@ export const ConsultaUsuariosProvider = ({ children }) => {
     [auth]
   );
 
+  /** 🔹 Cambiar correo */
+  const actualizarCorreoUsuario = useCallback(async (usuarioId, nuevoCorreo) => {
+    try {
+      const res = await cambiarCorreoUsuario(usuarioId, nuevoCorreo, auth);
+      setUsuarios((prev) =>
+        prev.map((u) => (u.id === usuarioId ? { ...u, correo: nuevoCorreo } : u))
+      );
+      return res?.mensaje || "Correo actualizado correctamente";
+    } catch (err) {
+      console.error("Error al cambiar correo:", err);
+      throw new Error(err.message || "Error al cambiar correo");
+    }
+  }, [auth]);
+
+  /** 🔹 Cambiar contraseña */
+  const actualizarContrasenaUsuario = useCallback(async (usuarioId, nuevaContrasena) => {
+    try {
+      const res = await cambiarContrasenaUsuario(usuarioId, nuevaContrasena, auth);
+      return res?.mensaje || "Contraseña actualizada correctamente";
+    } catch (err) {
+      console.error("Error al cambiar contraseña:", err);
+      throw new Error(err.message || "Error al cambiar contraseña");
+    }
+  }, [auth]);
+
+  /** 🔹 Cambiar status (ACTIVO / INACTIVO) */
+  const actualizarStatusUsuario = useCallback(async (usuarioId, nuevoStatus) => {
+    try {
+      const res = await cambiarStatusUsuario(usuarioId, nuevoStatus, auth);
+      setUsuarios((prev) =>
+        prev.map((u) => (u.id === usuarioId ? { ...u, status: nuevoStatus } : u))
+      );
+      return res?.mensaje || `Status cambiado a ${nuevoStatus}`;
+    } catch (err) {
+      console.error("Error al cambiar status:", err);
+      throw new Error(err.message || "Error al cambiar status");
+    }
+  }, [auth]);
+
   /**
    * 🔹 Cargar al montar
    */
@@ -93,7 +134,10 @@ export const ConsultaUsuariosProvider = ({ children }) => {
         message,
         setMessage,
         fetchUsuarios,
-        eliminarUsuario, // ✅ Lógica centralizada
+        eliminarUsuario,
+        actualizarCorreoUsuario,
+        actualizarContrasenaUsuario,
+        actualizarStatusUsuario,
       }}
     >
       {children}

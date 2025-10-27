@@ -1,0 +1,152 @@
+.consulta-logs-container {
+  padding: 2rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto 1fr auto;
+  gap: 1rem;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.consulta-logs-title {
+  font-size: 1.6rem;
+  color: #000d1f;
+  margin-bottom: 1rem;
+}
+
+.logs-button-bar {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.logs-button-bar button {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #0056b3;
+  background-color: #fff;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+}
+
+.logs-button-bar button.active {
+  background-color: #0056b3;
+  color: #fff;
+}
+
+.logs-button-bar button:hover {
+  background-color: #2980b9;
+  color: #fff;
+}
+
+.logs-loading,
+.logs-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  color: #555;
+}
+
+.logs-spinner {
+  margin-right: 0.5rem;
+  animation: spin 1s linear infinite;
+}
+
+.logs-table-container {
+  background: #ededed;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow:
+    0 10px 20px rgba(0,0,0,0.2),
+    0 20px 40px rgba(0,0,0,0.1),
+    0 30px 60px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
+}
+
+.logs-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 2px solid #0056b3;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.logs-table th {
+  background-color: #0056b3;
+  padding: 10px 12px;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.logs-table td {
+  border: 1.5px solid #0056b3;
+  padding: 10px 12px;
+  text-align: left;
+  color: #000;
+  transition: background-color 0.3s ease;
+  overflow: hidden;
+}
+
+.logs-table tr {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.logs-table tr:nth-child(even) {
+  background-color: #dceafc;
+}
+
+.logs-table tr:hover {
+  background-color: #adcdfe;
+}
+
+.no-data {
+  text-align: center;
+  font-style: italic;
+  color: #333;
+}
+
+.logs-button-bar button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+  .consulta-logs-container {
+    padding: 1rem;
+  }
+
+  .logs-table-container {
+    padding: 1rem;
+  }
+
+  .logs-table th,
+  .logs-table td {
+    padding: 6px 8px;
+    font-size: 0.9rem;
+  }
+
+  .consulta-logs-title {
+    font-size: 1.3rem;
+  }
+}

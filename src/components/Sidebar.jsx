@@ -10,7 +10,8 @@ import {
   FaUsers,
   FaSpinner,
   FaUserCheck,
-  FaAddressBook
+  FaAddressBook,
+  FaClipboardList 
 } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import "../styles/Sidebar.css";
@@ -24,6 +25,7 @@ const MENU_ITEMS = [
   { id: "institucion", icon: FaUniversity, label: "09 Junta Distrital Ejecutiva", roles: ["USER"] },
   { id: "usuariosActivos", icon: FaUserCheck, label: "Usuarios Activos", roles: ["ADMIN", "VOCAL"] },
   { id: "consultaUsuarios", icon: FaAddressBook, label: "Consulta de Usuarios", roles: ["ADMIN"] },
+  { id: "consultaLogs", icon: FaClipboardList, label: "Consulta de Logs", roles: ["ADMIN"] },
 ];
 
 const Sidebar = ({ sidebarOpen, toggleSidebar, activeTab, setActiveTab, handleLogout, user, loadingUser }) => {

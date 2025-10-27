@@ -226,6 +226,23 @@
   border: 1.5px solid #0c5460;
 }
 
+.modal-content.confirm {
+  max-width: 400px;
+  text-align: center;
+  background: #fff;
+  border-radius: 10px;
+  padding: 2rem;
+}
+
+.modal-content.confirm h3 {
+  color: #b30000;
+  margin-bottom: 1rem;
+}
+
+.modal-content.confirm p {
+  margin-bottom: 1.5rem;
+}
+
 /* Botones modal */
 .modal-buttons {
   display: flex;

@@ -128,6 +128,39 @@
   font-size: 18px;
 }
 
+.btn-status {
+  grid-column: span 3;
+  justify-self: center;
+  background: #000d1f;
+  color: #fff;
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-status:hover{
+  background: #003366;
+  transform: scale(1.02);
+}
+
+.modal-content.edit {
+  background: #fdfdfd;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  padding: 2rem;
+  width: 100%;
+  max-width: 520px;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { transform: scale(0.96); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
 .no-data {
   text-align: center;
   font-style: italic;
@@ -162,6 +195,149 @@
   cursor: not-allowed;
 }
 
+.modal-form-group.horizontal {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+/* Agrupa input + botón en una misma fila */
+.email-actions,
+.password-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  width: 100%;
+}
+
+/* Input ocupa todo el espacio disponible */
+.email-actions input,
+.password-actions input {
+  flex: 1;
+  padding: 0.6rem;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.email-actions input:focus,
+.password-actions input:focus {
+  border-color: #0056b3;
+  outline: none;
+}
+
+/* Botones a la derecha */
+.btn-email,
+.btn-password {
+  white-space: nowrap;
+  padding: 0.6rem 0.9rem;
+  font-weight: bold;
+  background: #000d1f;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-email:hover,
+.btn-password:hover {
+  background: #003366;
+  transform: scale(1.02);
+}
+
+.modal-form-group.horizontal input,
+.modal-form-group.horizontal select {
+  padding: 0.75rem;
+  border: 1px solid #9eacc0;
+  border-radius: 0.5rem;
+  outline: none;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.modal-form-group.horizontal input:focus,
+.modal-form-group.horizontal select:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3);
+}
+
+.password-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrapper input {
+  flex: 1;
+  padding-right: 40px; /* Espacio para el ícono */
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #444;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggle-password:hover {
+  color: #ff008c;
+}
+
+.modal-content.eliminar {
+  max-width: 400px;
+  text-align: center;
+  background: #fff;
+  border-radius: 10px;
+  padding: 2rem;
+}
+
+.modal-content.eliminar h3 {
+  color: #b30000;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.modal-content.eliminar p {
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+}
+
+.modal-content.confirmar {
+  max-width: 400px;
+  text-align: center;
+  background: #fff;
+  border-radius: 10px;
+  padding: 2rem;
+}
+
+.modal-content.confirmar h3 {
+  color: #000d1f;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.modal-content.confirmar p {
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+}
+
+.confirmar-buttons {
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+}
+
 @keyframes spin {
   100% {
     transform: rotate(360deg);
@@ -185,5 +361,19 @@
 
   .consulta-usuarios-title {
     font-size: 1.3rem;
+  }
+}
+
+/* En pantallas pequeñas, los botones bajan debajo del input */
+@media (max-width: 600px) {
+  .email-actions,
+  .password-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-email,
+  .btn-password {
+    width: 100%;
   }
 }
