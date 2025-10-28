@@ -1,0 +1,582 @@
+/* //src/styles/Contratos.css */
+
+/* Contenedor principal del tab */
+.contratos-container {
+  padding: 2rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  
+  /* 🔹 CAMBIO CRÍTICO: Usar Grid en lugar de Flex */
+  display: grid;
+  grid-template-columns: minmax(0, 1fr); /* 🔹 Fuerza la contención */
+  grid-template-rows: auto 1fr auto;
+  gap: 1rem;
+  
+  overflow: hidden;
+  min-height: 0;
+  min-width: 0;
+}
+
+/* Título */
+.contratos-title {
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  color: #000d1f;
+}
+
+.contratos-form-table {
+  background: #ededed;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow:
+    0 10px 20px rgba(0,0,0,0.2),
+    0 20px 40px rgba(0,0,0,0.1),
+    0 30px 60px rgba(0,0,0,0.1);
+  /* 🔹 CAMBIOS CRÍTICOS */
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
+  
+  /* 🔹 FUERZA la compresión */
+  min-width: 0 !important;
+  display: block;
+  
+  /* 🔹 NUEVO: Asegura que no se expanda */
+  flex-shrink: 1;
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.contratos-form {
+  background: #ededed;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow:
+    0 10px 20px rgba(0,0,0,0.2),
+    0 20px 40px rgba(0,0,0,0.1),
+    0 30px 60px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 🔹 Fijo a 2 columnas */
+  gap: 1.5rem 2rem;
+  box-sizing: border-box;
+  margin-bottom: 2rem;
+}
+
+/* Tabla */
+.contratos-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 2px solid #0056b3; /* Borde general más fuerte */
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.contratos-table th,
+.contratos-table td {
+  border: 1.5px solid #0056b3; /* Bordes internos más visibles */
+  padding: 10px 12px;
+  text-align: left;
+  transition: background-color 0.3s ease;
+}
+
+/* Encabezado */
+.contratos-table th {
+  background-color: #0056b3;
+  color: #ffffff;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+/* Filas */
+.contratos-table tr {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.contratos-table tr:nth-child(even) {
+  background-color: #dceafc; /* Alternar color de filas */
+}
+
+/* Hover */
+.contratos-table tr:hover {
+  background-color: #adcdfe;
+  transition: background-color 0.3s ease;
+}
+
+/* Centrar contenido en las celdas de acción */
+.action-cell {
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* Botones de iconos */
+.btn-icon {
+  width: 36px;
+  height: 36px;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Estilo para botón de editar */
+.btn-icon.edit {
+  background-color: #3498db;
+  color: white;
+}
+
+.btn-icon.edit:hover {
+  background-color: #2980b9;
+  transform: scale(1.1);
+}
+
+/* Estilo para botón de eliminar */
+.btn-icon.delete {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.btn-icon.delete:hover {
+  background-color: #c0392b;
+  transform: scale(1.1);
+}
+
+/* Íconos dentro de los botones */
+.btn-icon svg {
+  font-size: 18px;
+}
+
+.contratos-form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.contratos-form-group label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #000d1f;
+}
+
+.contratos-form-group input,
+.contratos-form-group select {
+  padding: 0.75rem;
+  border: 1px solid #9eacc0;
+  border-radius: 0.5rem;
+  outline: none;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.contratos-form-group input:focus,
+.contratos-form-group select:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3);
+}
+
+.contratos-btn-guardar {
+  grid-column: span 2;
+  justify-self: center;
+  background: #000d1f;
+  color: #fff;
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.contratos-btn-guardar:hover {
+  background: #003366;
+  transform: scale(1.02);
+}
+
+/* Mensajes de éxito / error dentro del formulario y la tabla*/
+.contratos-message-create,
+.contratos-message-table {
+  display: inline-block; /* Ocupa solo lo necesario */
+  text-align: center;
+  padding: 0.8rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  box-sizing: border-box;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  grid-column: span 2; /* 🔹 Ocupa toda la fila del grid */
+  justify-self: center; /* 🔹 Centra horizontalmente */
+}
+
+/* Mensaje arriba de la tabla: solo ocupa el ancho del texto */
+.contratos-message-table {
+  display: inline-block;       /* 🔹 Solo ocupa el ancho necesario */
+  align-self: center;          /* 🔹 Centra horizontalmente dentro del contenedor flex */
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Diferenciar tipos de mensaje */
+.contratos-message-create.success,
+.contratos-message-table.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1.5px solid #155724;
+}
+
+.contratos-message-create.error,
+.contratos-message-table.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1.5px solid #721c24;
+}
+
+.contratos-message-create.info,
+.contratos-message-table.info {
+  background-color: #d1ecf1;
+  color: #0c5460;
+  border: 1.5px solid #0c5460;
+}
+
+/* Modal de confirmación */
+.modal-content.confirm {
+  max-width: 400px;
+  text-align: center;
+  background: #fff;
+  border-radius: 10px;
+  padding: 2rem;
+}
+
+.modal-content.confirm h3 {
+  color: #b30000;
+  margin-bottom: 1rem;
+}
+
+.modal-content.confirm p {
+  margin-bottom: 1.5rem;
+}
+
+.confirm-buttons {
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+}
+
+.btn-cancelar {
+  background-color: #ccc;
+  color: #333;
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-cancelar:hover {
+  background-color: #bbb;
+}
+
+.btn-eliminar {
+  background-color: #e63946;
+  color: #fff;
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-eliminar:hover {
+  background-color: #c62828;
+}
+
+/* === Fondo oscuro del modal === */
+.modal {
+  position: fixed; /* <--- clave para que flote sobre todo */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* <--- muy importante para que quede arriba de todo */
+}
+
+/* === Contenido del modal === */
+.modal-content {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 450px;
+  width: 90%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  animation: fadeInScale 0.2s ease;
+}
+
+/* Animación de entrada suave */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* === Específico para el modal de confirmación === */
+.modal-content.confirm {
+  text-align: center;
+}
+
+.modal-content.confirm h3 {
+  color: #b30000;
+  margin-bottom: 1rem;
+}
+
+.modal-content.confirm p {
+  margin-bottom: 1.5rem;
+}
+
+.confirm-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/* Botones del modal de confirmación */
+.btn-cancelar {
+  background-color: #ccc;
+  color: #333;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.btn-cancelar:hover {
+  background-color: #bbb;
+}
+
+.btn-eliminar {
+  background-color: #e63946;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.btn-eliminar:hover {
+  background-color: #c62828;
+}
+
+/* === Modal de edición === */
+.modal-content.edit {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  animation: fadeInScale 0.25s ease;
+}
+
+.modal-title {
+  text-align: center;
+  font-size: 1.4rem;
+  color: #000d1f;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.modal-form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-form-group label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #000d1f;
+}
+
+.modal-form-group input {
+  padding: 0.75rem;
+  border: 1px solid #9eacc0;
+  border-radius: 0.5rem;
+  outline: none;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.modal-form-group input:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3);
+}
+
+/* Mensajes dentro del modal */
+.form-message-modal {
+  text-align: center;
+  padding: 0.8rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.form-message-modal.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1.5px solid #155724;
+}
+
+.form-message-modal.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1.5px solid #721c24;
+}
+
+.form-message-modal.info {
+  background-color: #d1ecf1;
+  color: #0c5460;
+  border: 1.5px solid #0c5460;
+}
+
+/* Botones del modal */
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.btn-guardar {
+  background-color: #000d1f;
+  color: #fff;
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+
+.btn-guardar:hover {
+  background-color: #003366;
+}
+
+/* ====== SPINNER ====== */
+.spinner {
+  margin-left: 6px;
+  vertical-align: middle;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 768px) {
+  .contratos-table th,
+  .contratos-table td {
+    padding: 8px;
+    font-size: 0.85rem;
+  }
+
+  .contratos-form {
+    padding: 15px;
+  }
+
+  .contratos-btn-guardar {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* === Nuevo diseño de formulario en el modal de edición === */
+.modal-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* dos columnas */
+  gap: 1.2rem 2rem;
+}
+
+.modal-form-grid .modal-form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-form-grid .modal-form-group label {
+  font-weight: bold;
+  margin-bottom: 0.4rem;
+  color: #000d1f;
+}
+
+.modal-form-grid .modal-form-group input {
+  padding: 0.7rem;
+  border: 1px solid #9eacc0;
+  border-radius: 0.5rem;
+  outline: none;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.modal-form-grid .modal-form-group input:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3);
+}
+
+/* Mensajes dentro del modal: ocupar toda la fila */
+.form-message-modal {
+  grid-column: span 2;
+  text-align: center;
+  padding: 0.8rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* Botones centrados en toda la fila */
+.modal-buttons {
+  grid-column: span 2;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* Responsivo: 1 columna en pantallas pequeñas */
+@media (max-width: 768px) {
+  .modal-form-grid {
+    grid-template-columns: 1fr;
+  }
+}

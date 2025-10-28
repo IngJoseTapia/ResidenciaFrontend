@@ -9,6 +9,7 @@ import { AsignacionProvider } from "../context/AsignacionProvider";
 import { UsuariosActivosProvider } from "../context/UsuariosActivosProvider";
 import { ConsultaUsuariosProvider } from "../context/ConsultaUsuariosProvider";
 import { LogsSistemaProvider } from "../context/LogsSistemaProvider";
+import { ContratoProvider } from "../context/ContratoProvider";
 
 import Topbar from "../components/Topbar";
 import Sidebar from "../components/Sidebar";
@@ -22,6 +23,7 @@ import UsuariosPendientes from "../tabs/UsuariosPendientes";
 import UsuariosActivos from "../tabs/UsuariosActivos";
 import ConsultaUsuarios from "../tabs/ConsultaUsuarios";
 import ConsultaLogs from "../tabs/ConsultaLogs";
+import Contratos from "../tabs/Contratos";
 
 import "../styles/Dashboard.css";
 
@@ -135,6 +137,12 @@ const DashboardAdmin = () => {
               <LogsSistemaProvider>
                 <ConsultaLogs />
               </LogsSistemaProvider>
+            )}
+
+            {activeTab === "contratos" && (
+              <ContratoProvider user={user}>
+                <Contratos />
+              </ContratoProvider>
             )}
 
             {activeTab === "notificaciones" && (

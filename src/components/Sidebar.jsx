@@ -26,6 +26,7 @@ const MENU_ITEMS = [
   { id: "usuariosActivos", icon: FaUserCheck, label: "Usuarios Activos", roles: ["ADMIN", "VOCAL"] },
   { id: "consultaUsuarios", icon: FaAddressBook, label: "Consulta de Usuarios", roles: ["ADMIN"] },
   { id: "consultaLogs", icon: FaClipboardList, label: "Consulta de Logs", roles: ["ADMIN"] },
+  { id: "contratos", icon: FaClipboardList, label: "Contratos", roles: ["ADMIN", "RRHH"] },
 ];
 
 const Sidebar = ({ sidebarOpen, toggleSidebar, activeTab, setActiveTab, handleLogout, user, loadingUser }) => {
