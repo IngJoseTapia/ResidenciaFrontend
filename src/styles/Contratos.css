@@ -337,13 +337,18 @@
   }
 }
 
-/* === Específico para el modal de confirmación === */
 .modal-content.confirm {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 25px 30px;
   text-align: center;
+  max-width: 400px;
+  margin: auto;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
 }
 
 .modal-content.confirm h3 {
-  color: #b30000;
+  color: #000d1f;
   margin-bottom: 1rem;
 }
 
@@ -352,6 +357,27 @@
 }
 
 .confirm-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* === Específico para el modal de confirmación === */
+.modal-content.delete {
+  text-align: center;
+}
+
+.modal-content.delete h3 {
+  color: #b30000;
+  margin-bottom: 1rem;
+}
+
+.modal-content.delete p {
+  margin-bottom: 1.5rem;
+}
+
+.delete-buttons {
   display: flex;
   justify-content: center;
   gap: 1rem;
@@ -438,6 +464,29 @@
 .modal-form-group input:focus {
   border-color: #6366f1;
   box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3);
+}
+
+.contrato-textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #9eacc0;
+  border-radius: 0.5rem;
+  outline: none;
+  font-size: 1rem;
+  resize: none; /* evita redimensionar */
+  min-height: 80px;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.contrato-textarea:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3);
+}
+
+.contrato-dates{
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Mensajes dentro del modal */

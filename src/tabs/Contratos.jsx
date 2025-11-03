@@ -39,6 +39,7 @@ const Contratos = () => {
   const [tableMessageType, setTableMessageType] = React.useState("");
   const [confirmOpen, setConfirmOpen] = React.useState(false);
   const [contratoToDelete, setContratoToDelete] = React.useState(null);
+  const [confirmUpdateOpen, setConfirmUpdateOpen] = React.useState(false);
 
   const showMessage = (msg, type, context = "form") => {
     const setMsg = {
@@ -91,13 +92,13 @@ const Contratos = () => {
     }
   };
 
-  const handleUpdate = async (e) => {
-    e.preventDefault();
+  const handleUpdate = async (contratoData = selectedContrato, e) => {
+    if (e) e.preventDefault();
     setLoadingUpdate(true);
     showMessage("Procesando...", "info", "modal");
 
     try {
-      const res = await actualizarContrato(selectedContrato.id, selectedContrato);
+      const res = await actualizarContrato(contratoData.id, contratoData);
       if (res.success) {
         showMessage(res.message, "success", "modal");
         setTimeout(() => handleCloseModal(), 6000);
@@ -209,6 +210,7 @@ const Contratos = () => {
             onChange={(e) =>
               setNewContrato((prev) => ({ ...prev, puesto: e.target.value }))
             }
+            placeholder="Nombre del puesto o cargo"
             required
           />
         </div>
@@ -221,6 +223,7 @@ const Contratos = () => {
             onChange={(e) =>
               setNewContrato((prev) => ({ ...prev, codigo: e.target.value }))
             }
+            placeholder="Código de identificación del puesto o cargo"
             required
           />
         </div>
@@ -236,6 +239,7 @@ const Contratos = () => {
                 nivelTabular: e.target.value,
               }))
             }
+            placeholder="Nivel tabular del puesto o cargo"
             required
           />
         </div>
@@ -251,6 +255,7 @@ const Contratos = () => {
                 fechaInicio: e.target.value,
               }))
             }
+            className="contrato-dates"
             required
           />
         </div>
@@ -266,14 +271,14 @@ const Contratos = () => {
                 fechaConclusion: e.target.value,
               }))
             }
+            className="contrato-dates"
             required
           />
         </div>
 
         <div className="contratos-form-group">
           <label>Actividades Genéricas</label>
-          <input
-            type="text"
+          <textarea
             value={newContrato.actividadesGenericas}
             onChange={(e) =>
               setNewContrato((prev) => ({
@@ -281,6 +286,9 @@ const Contratos = () => {
                 actividadesGenericas: e.target.value,
               }))
             }
+            className="contrato-textarea"
+            placeholder="Actividades o funciones genéricas"
+            rows="3"
             required
           />
         </div>
@@ -297,6 +305,7 @@ const Contratos = () => {
                 sueldo: e.target.value,
               }))
             }
+            placeholder="Sueldo mensual"
             required
           />
         </div>
@@ -403,18 +412,20 @@ const Contratos = () => {
                 </div>
 
                 <div className="modal-form-group">
-                <label>Actividades Genéricas</label>
-                <input
-                    type="text"
+                  <label>Actividades Genéricas</label>
+                  <textarea
                     value={selectedContrato.actividadesGenericas}
                     onChange={(e) =>
-                    setSelectedContrato((prev) => ({
+                      setSelectedContrato((prev) => ({
                         ...prev,
                         actividadesGenericas: e.target.value,
-                    }))
+                      }))
                     }
+                    className="contrato-textarea"
+                    placeholder="Describe las actividades genéricas"
+                    rows="3"
                     required
-                />
+                  />
                 </div>
 
                 <div className="modal-form-group">
@@ -441,17 +452,18 @@ const Contratos = () => {
 
                 <div className="modal-buttons">
                 <button
-                    type="submit"
-                    disabled={loadingUpdate}
-                    className="btn-guardar"
+                  type="button"
+                  disabled={loadingUpdate}
+                  className="btn-guardar"
+                  onClick={() => setConfirmUpdateOpen(true)}
                 >
-                    {loadingUpdate ? (
+                  {loadingUpdate ? (
                     <>
-                        <FaSpinner className="spinner" /> Procesando...
+                       Procesando... <FaSpinner className="spinner" />
                     </>
-                    ) : (
+                  ) : (
                     "Actualizar"
-                    )}
+                  )}
                 </button>
                 <button
                     type="button"
@@ -468,13 +480,13 @@ const Contratos = () => {
 
       {confirmOpen && contratoToDelete && (
         <div className="modal">
-          <div className="modal-content confirm">
+          <div className="modal-content delete">
             <h3>¿Eliminar Contrato?</h3>
             <p>
               ¿Seguro que deseas eliminar el contrato de{" "}
               <strong>{contratoToDelete.puesto}</strong>?
             </p>
-            <div className="confirm-buttons">
+            <div className="delete-buttons">
               <button
                 className="btn-cancelar"
                 onClick={() => setConfirmOpen(false)}
@@ -499,6 +511,39 @@ const Contratos = () => {
           </div>
         </div>
       )}
+      {confirmUpdateOpen && (
+      <div className="modal">
+        <div className="modal-content confirm">
+          <h3>Confirmar actualización</h3>
+          <p>¿Deseas guardar los cambios realizados en este contrato?</p>
+          <div className="confirm-buttons">
+            <button
+              className="btn-cancelar"
+              onClick={() => setConfirmUpdateOpen(false)}
+              disabled={loadingUpdate}
+            >
+              Cancelar
+            </button>
+            <button
+              className="btn-guardar"
+              onClick={async () => {
+                setConfirmUpdateOpen(false);
+                await handleUpdate(selectedContrato); // ejecuta la actualización real
+              }}
+              disabled={loadingUpdate}
+            >
+              {loadingUpdate ? (
+                <>
+                  <FaSpinner className="spinner" /> Procesando...
+                </>
+              ) : (
+                "Aceptar"
+              )}
+            </button>
+          </div>
+        </div>
+      </div>
+    )}
     </div>
   );
 };
