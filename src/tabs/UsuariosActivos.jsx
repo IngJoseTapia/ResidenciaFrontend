@@ -5,7 +5,7 @@ import "../styles/UsuariosActivos.css";
 import Pagination from "../components/Pagination";
 import { useUsuariosActivos } from "../hooks/useUsuariosActivos";
 
-const rolesDisponibles = ["USER", "VOCAL", "CAE", "SE", "ADMIN"];
+const rolesDisponibles = ["ADMIN", "VOCAL", "RRHH", "CAE", "SE", "TECNICO", "CAPTURISTA", "AUXILIAR", "MONITORISTA", "VALIDADOR", "USER"];
 
 const UsuariosActivos = () => {
   const [modalOpen, setModalOpen] = useState(false);

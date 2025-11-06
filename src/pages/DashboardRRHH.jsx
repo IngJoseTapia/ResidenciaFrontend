@@ -1,67 +1,58 @@
-// src/pages/DashboardAdmin.jsx
+//src/pages/DashboardRRHH.jsx
 import React, { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { useUser } from "../hooks/useUser";
 import { useNotifications } from "../hooks/useNotifications";
-import { VocaliaProvider } from "../context/VocaliaProvider";
-import { AsignacionProvider } from "../context/AsignacionProvider";
-import { UsuariosActivosProvider } from "../context/UsuariosActivosProvider";
-import { ConsultaUsuariosProvider } from "../context/ConsultaUsuariosProvider";
-import { LogsSistemaProvider } from "../context/LogsSistemaProvider";
+
+// Providers reutilizables
 import { ContratoProvider } from "../context/ContratoProvider";
 import { UsuarioContratoProvider } from "../context/UsuarioContratoProvider";
-import { MunicipioProvider } from "../context/MunicipioProvider";
 
+// Componentes base
 import Topbar from "../components/Topbar";
 import Sidebar from "../components/Sidebar";
 import NotificationModal from "../components/NotificationModal";
 
+// Tabs
 import Bienvenida from "../tabs/Bienvenida";
-import Notificaciones from "../tabs/Notificaciones";
 import Perfil from "../tabs/Perfil";
-import Vocalias from "../tabs/Vocalias";
-import UsuariosPendientes from "../tabs/UsuariosPendientes";
-import UsuariosActivos from "../tabs/UsuariosActivos";
-import ConsultaUsuarios from "../tabs/ConsultaUsuarios";
-import ConsultaLogs from "../tabs/ConsultaLogs";
+import Notificaciones from "../tabs/Notificaciones";
 import Contratos from "../tabs/Contratos";
 import VinculosContratos from "../tabs/VinculosContratos";
-import Municipios from "../tabs/Municipios";
 
 import "../styles/Dashboard.css";
 
-const DashboardAdmin = () => {
+const DashboardRRHH = () => {
   const { logout } = useAuth();
   const { user, loadingUser, updateUserInfo, changePassword } = useUser();
   const { notifications, loadingNotifications, reloadNotifications } = useNotifications();
   const navigate = useNavigate();
 
+  // Estados UI
   const [activeTab, setActiveTab] = useState("bienvenida");
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [showNotifications, setShowNotifications] = useState(false);
   const [closingNotifications, setClosingNotifications] = useState(false);
 
+  // --- Handlers ---
+  const toggleSidebar = useCallback(() => setSidebarOpen(prev => !prev), []);
+  const handleLogout = useCallback(() => {
+    logout();
+    navigate("/", { replace: true });
+  }, [logout, navigate]);
+
   const toggleNotifications = useCallback(() => {
     if (showNotifications) {
-      // si está abierto, cerrar con animación
       setClosingNotifications(true);
       setTimeout(() => {
         setShowNotifications(false);
         setClosingNotifications(false);
       }, 300);
     } else {
-      // si está cerrado, abrir directamente
       setShowNotifications(true);
     }
   }, [showNotifications]);
-
-  // --- Handlers ---
-  const toggleSidebar = useCallback(() => setSidebarOpen(prev => !prev), []);
-  const handleLogout = useCallback(() => {
-    logout(); // ya guarda el flag
-    navigate("/", { replace: true }); // redirige inmediatamente
-  }, [logout, navigate]);
 
   const handleViewAllNotifications = useCallback(async () => {
     await reloadNotifications();
@@ -69,6 +60,7 @@ const DashboardAdmin = () => {
     setShowNotifications(false);
   }, [reloadNotifications]);
 
+  // --- Loading ---
   if (loadingUser) {
     return (
       <div className="dashboard-skeleton">
@@ -81,6 +73,7 @@ const DashboardAdmin = () => {
 
   return (
     <div className="dashboard-wrapper">
+      {/* Sidebar */}
       <Sidebar
         sidebarOpen={sidebarOpen}
         toggleSidebar={toggleSidebar}
@@ -91,6 +84,7 @@ const DashboardAdmin = () => {
         loadingUser={loadingUser}
       />
 
+      {/* Contenido principal */}
       <div className="main-content">
         <Topbar
           user={user}
@@ -104,75 +98,38 @@ const DashboardAdmin = () => {
             {activeTab === "bienvenida" && <Bienvenida />}
 
             {activeTab === "perfil" && (
-              <Perfil
+                <Perfil
                 user={user}
                 updateUserInfo={updateUserInfo}
                 changePassword={changePassword}
-              />
-            )}
-
-            {activeTab === "vocalias" && (
-              <VocaliaProvider user={user}>
-                <Vocalias />
-              </VocaliaProvider>
-            )}
-
-            {activeTab === "usuariosPendientes" && (
-              <VocaliaProvider user={user}>
-                <AsignacionProvider user={user}>
-                  <UsuariosPendientes />
-                </AsignacionProvider>
-              </VocaliaProvider>
-            )}
-
-            {activeTab === "usuariosActivos" && (
-              <UsuariosActivosProvider user={user}>
-                <UsuariosActivos />
-              </UsuariosActivosProvider>
-            )}
-
-            {activeTab === "consultaUsuarios" && (
-              <ConsultaUsuariosProvider>
-                <ConsultaUsuarios />
-              </ConsultaUsuariosProvider>
-            )}
-
-            {activeTab === "consultaLogs" && (
-              <LogsSistemaProvider>
-                <ConsultaLogs />
-              </LogsSistemaProvider>
+                />
             )}
 
             {activeTab === "contratos" && (
-              <ContratoProvider user={user}>
+                <ContratoProvider user={user}>
                 <Contratos />
-              </ContratoProvider>
+                </ContratoProvider>
             )}
 
             {activeTab === "vinculosContratos" && (
-              <UsuarioContratoProvider user={user}>
+                <UsuarioContratoProvider user={user}>
                 <VinculosContratos user={user} />
-              </UsuarioContratoProvider>
-            )}
-
-            {activeTab === "municipios" && (
-              <MunicipioProvider user={user}>
-                <Municipios />
-              </MunicipioProvider>
+                </UsuarioContratoProvider>
             )}
 
             {activeTab === "notificaciones" && (
-              <Notificaciones
+                <Notificaciones
                 notifications={notifications}
                 loadingNotifications={loadingNotifications}
                 reloadNotifications={reloadNotifications}
                 setActiveTab={setActiveTab}
-              />
+                />
             )}
           </section>
         </div>
       </div>
 
+      {/* Modal de notificaciones */}
       {showNotifications && (
         <NotificationModal
           notifications={notifications || []}
@@ -190,4 +147,4 @@ const DashboardAdmin = () => {
   );
 };
 
-export default DashboardAdmin;
+export default DashboardRRHH;

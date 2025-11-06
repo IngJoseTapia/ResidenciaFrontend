@@ -11,14 +11,15 @@ import {
   FaSpinner,
   FaUserCheck,
   FaAddressBook,
-  FaClipboardList 
+  FaClipboardList,
+  FaMapMarkedAlt
 } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import "../styles/Sidebar.css";
 
 const MENU_ITEMS = [
-  { id: "bienvenida", icon: FaHome, label: "Dashboard", roles: ["ADMIN", "VOCAL", "USER"] },
-  { id: "perfil", icon: FaUser, label: "Mi Información", roles: ["ADMIN", "VOCAL", "USER"] },
+  { id: "bienvenida", icon: FaHome, label: "Dashboard", roles: ["ADMIN", "VOCAL", "USER", "RRHH"] },
+  { id: "perfil", icon: FaUser, label: "Mi Información", roles: ["ADMIN", "VOCAL", "USER", "RRHH"] },
   { id: "vocalias", icon: FaBuilding, label: "Vocalías", roles: ["ADMIN"] },
   { id: "usuariosPendientes", icon: FaUsers, label: "Usuarios Pendientes", roles: ["ADMIN"] },
   { id: "tutorial", icon: FaBook, label: "Cómo usar", roles: ["USER"] },
@@ -28,6 +29,7 @@ const MENU_ITEMS = [
   { id: "consultaLogs", icon: FaClipboardList, label: "Consulta de Logs", roles: ["ADMIN"] },
   { id: "contratos", icon: FaClipboardList, label: "Contratos", roles: ["ADMIN", "RRHH"] },
   { id: "vinculosContratos", icon: FaAddressBook, label: "Vínculos Contratos", roles: ["ADMIN", "RRHH"] },
+  { id: "municipios", icon: FaMapMarkedAlt, label: "Municipios", roles: ["ADMIN"] },
 ];
 
 const Sidebar = ({ sidebarOpen, toggleSidebar, activeTab, setActiveTab, handleLogout, user, loadingUser }) => {

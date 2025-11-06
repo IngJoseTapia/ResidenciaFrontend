@@ -8,6 +8,7 @@ import ResetPassword from "./pages/ResetPassword";
 import DashboardUser from "./pages/DashboardUser";
 import DashboardAdmin from "./pages/DashboardAdmin";
 import DashboardVocal from "./pages/DashboardVocal";
+import DashboardRRHH from "./pages/DashboardRRHH";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import GoogleCallback from "./pages/GoogleCallback";
 import Unauthorized from "./pages/Unauthorized";
@@ -51,6 +52,15 @@ function App() {
           element={
             <ProtectedRoute role="VOCAL">
               <DashboardVocal />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/rrhh/dashboard"
+          element={
+            <ProtectedRoute role="RRHH">
+              <DashboardRRHH />
             </ProtectedRoute>
           }
         />

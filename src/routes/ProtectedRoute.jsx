@@ -44,6 +44,7 @@ const ProtectedRoute = ({ children, role }) => {
     const fallbackDashboard =
       user.role === "ADMIN" ? "/admin/dashboard" :
       user.role === "VOCAL" ? "/vocal/dashboard" :
+      user.role === "RRHH" ? "/rrhh/dashboard" :
       "/user/dashboard";
 
     return (

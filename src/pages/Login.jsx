@@ -11,6 +11,7 @@ const ROLE_PATHS = {
   ADMIN: "/admin/dashboard",
   VOCAL: "/vocal/dashboard",
   USER: "/user/dashboard",
+  RRHH: "/rrhh/dashboard",
 };
 
 const Login = () => {
