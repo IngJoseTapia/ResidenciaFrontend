@@ -12,6 +12,9 @@ import { LogsSistemaProvider } from "../context/LogsSistemaProvider";
 import { ContratoProvider } from "../context/ContratoProvider";
 import { UsuarioContratoProvider } from "../context/UsuarioContratoProvider";
 import { MunicipioProvider } from "../context/MunicipioProvider";
+import { ZoreProvider } from "../context/ZoreProvider";
+import { AreProvider } from "../context/AreProvider";
+import { AsignacionZoreAreProvider } from "../context/AsignacionZoreAreProvider";
 
 import Topbar from "../components/Topbar";
 import Sidebar from "../components/Sidebar";
@@ -28,6 +31,9 @@ import ConsultaLogs from "../tabs/ConsultaLogs";
 import Contratos from "../tabs/Contratos";
 import VinculosContratos from "../tabs/VinculosContratos";
 import Municipios from "../tabs/Municipios";
+import Zores from "../tabs/Zores";
+import Ares from "../tabs/Ares";
+import AsignacionesZoreAre from "../tabs/AsignacionesZoreAre";
 
 import "../styles/Dashboard.css";
 
@@ -159,6 +165,24 @@ const DashboardAdmin = () => {
               <MunicipioProvider user={user}>
                 <Municipios />
               </MunicipioProvider>
+            )}
+
+            {activeTab === "zores" && (
+              <ZoreProvider user={user}>
+                <Zores />
+              </ZoreProvider>
+            )}
+
+            {activeTab === "ares" && (
+              <AreProvider user={user}>
+                <Ares />
+              </AreProvider>
+            )}
+
+            {activeTab === "asignacionesZoreAre" && (
+              <AsignacionZoreAreProvider user={user}>
+                <AsignacionesZoreAre user={user} />
+              </AsignacionZoreAreProvider>
             )}
 
             {activeTab === "notificaciones" && (

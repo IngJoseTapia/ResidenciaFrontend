@@ -1,0 +1,404 @@
+/* src/styles/AsignacionesZoreAre.css */
+.asignacioneszoreare-container {
+  padding: 2rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  
+  /* 🔹 CAMBIO CRÍTICO: Usar Grid en lugar de Flex */
+  display: grid;
+  grid-template-columns: minmax(0, 1fr); /* 🔹 Fuerza la contención */
+  grid-template-rows: auto 1fr auto;
+  gap: 1rem;
+  
+  overflow: hidden;
+  min-height: 0;
+  min-width: 0;
+}
+
+.asignacioneszoreare-title {
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  color: #000d1f;
+}
+
+.asignacioneszoreare-form {
+  background: #ededed;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow:
+    0 10px 20px rgba(0,0,0,0.2),
+    0 20px 40px rgba(0,0,0,0.1),
+    0 30px 60px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 🔹 Fijo a 2 columnas */
+  gap: 1.5rem 2rem;
+  box-sizing: border-box;
+  margin-bottom: 2rem;
+}
+
+.asignacioneszoreare-form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.asignacioneszoreare-form-group label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #000d1f;
+}
+
+.asignacioneszoreare-form-group input,
+.asignacioneszoreare-form-group select {
+  padding: 0.75rem;
+  border: 1px solid #9eacc0;
+  border-radius: 0.5rem;
+  outline: none;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.asignacioneszoreare-form-group input:focus,
+.asignacioneszoreare-form-group select:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3);
+}
+
+.asignacioneszoreare-btn-guardar {
+  grid-column: span 2;
+  justify-self: center;
+  background: #000d1f;
+  color: #fff;
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.asignacioneszoreare-btn-guardar:hover {
+  background: #003366;
+  transform: scale(1.02);
+}
+
+.asignacioneszoreare-btn-cancelar {
+  background-color: #ccc;
+  color: #333;
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.asignacioneszoreare-btn-cancelar:hover {
+  background-color: #bbb;
+  transform: scale(1.05);
+}
+
+.asignacioneszoreare-btn-icon svg {
+  font-size: 18px;
+}
+
+.asignacioneszoreare-message-form,
+.asignacioneszoreare-message-table {
+  display: inline-block; /* Ocupa solo lo necesario */
+  text-align: center;
+  padding: 0.8rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  box-sizing: border-box;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  grid-column: span 2; /* 🔹 Ocupa toda la fila del grid */
+  justify-self: center; /* 🔹 Centra horizontalmente */
+}
+
+.asignacioneszoreare-message-form.success,
+.asignacioneszoreare-message-table.success {
+  background-color: #e1f5e4;
+  color: #2e7d32;
+  border: 1px solid #81c784;
+}
+
+.asignacioneszoreare-message-form.error,
+.asignacioneszoreare-message-table.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.asignacioneszoreare-message-form.info,
+.asignacioneszoreare-message-table.info {
+  background-color: #e7f3fe;
+  color: #0b5394;
+  border: 1px solid #a7c8f2;
+}
+
+/* ---------- Tabla principal ---------- */
+
+.asignacioneszoreare-form-table {
+  background: #ededed;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow:
+    0 10px 20px rgba(0,0,0,0.2),
+    0 20px 40px rgba(0,0,0,0.1),
+    0 30px 60px rgba(0,0,0,0.1);
+  /* 🔹 CAMBIOS CRÍTICOS */
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
+  
+  /* 🔹 FUERZA la compresión */
+  min-width: 0 !important;
+  display: block;
+  
+  /* 🔹 NUEVO: Asegura que no se expanda */
+  flex-shrink: 1;
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.asignacioneszoreare-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 2px solid #0056b3; /* Borde general más fuerte */
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.asignacioneszoreare-table thead {
+  background-color: #0056b3;
+  color: #ffffff;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.asignacioneszoreare-table th,
+.asignacioneszoreare-table td {
+  border: 1.5px solid #0056b3; /* Bordes internos más visibles */
+  padding: 10px 12px;
+  text-align: left;
+  transition: background-color 0.3s ease;
+}
+
+.asignacioneszoreare-table th {
+  background-color: #0056b3;
+  color: #ffffff;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.asignacioneszoreare-table tr {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.asignacioneszoreare-table tr:nth-child(even) {
+  background-color: #dceafc; /* Alternar color de filas */
+}
+
+/* Hover */
+.asignacioneszoreare-table tr:hover {
+  background-color: #adcdfe;
+  transition: background-color 0.3s ease;
+}
+
+.asignacioneszoreare-action-cell {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.asignacioneszoreare-btn-icon {
+  width: 36px;
+  height: 36px;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.asignacioneszoreare-btn-icon.edit {
+  background-color: #3498db;
+  color: white;
+}
+
+.asignacioneszoreare-btn-icon.edit:hover {
+  background-color: #2980b9;
+  transform: scale(1.1);
+}
+
+/* ---------- Modal ---------- */
+
+.asignacioneszoreare-modal {
+  position: fixed; /* <--- clave para que flote sobre todo */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* <--- muy importante para que quede arriba de todo */
+}
+
+.asignacioneszoreare-modal-content {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 450px;
+  width: 90%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  animation: fadeInScale 0.2s ease;
+}
+
+/* 🔹 Ajustar ancho del modal */
+.asignacioneszoreare-modal-content.edit {
+  background: #fdfdfd;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  padding: 2rem;
+  width: 100%;
+  max-width: 520px;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.asignacioneszoreare-modal-title {
+  text-align: center;
+  font-size: 1.4rem;
+  color: #000d1f;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.asignacioneszoreare-modal-form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.2rem 2rem;
+}
+
+.asignacioneszoreare-modal-form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.asignacioneszoreare-modal-form-group label {
+  font-weight: bold;
+  margin-bottom: 0.4rem;
+  color: #000d1f;
+}
+
+.asignacioneszoreare-modal-form-group select,
+.asignacioneszoreare-modal-form-group input {
+  padding: 0.7rem;
+  border: 1px solid #9eacc0;
+  border-radius: 0.5rem;
+  outline: none;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.asignacioneszoreare-modal-form-group select:focus,
+.asignacioneszoreare-modal-form-group input:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3);
+}
+
+.asignacioneszoreare-modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.asignacioneszoreare-spinner {
+  margin-left: 8px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.asignacioneszoreare-modal-message {
+  text-align: center;
+  padding: 0.8rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  box-sizing: border-box;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+.asignacioneszoreare-modal-message.hidden {
+  opacity: 0;
+}
+
+.asignacioneszoreare-modal-message.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1.5px solid #155724;
+}
+
+.asignacioneszoreare-modal-message.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1.5px solid #721c24;
+}
+
+.asignacioneszoreare-modal-message.info {
+  background-color: #e7f3fe;
+  color: #0b5394;
+  border: 1px solid #0b5394;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 768px) {
+  .asignacioneszoreare-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .asignacioneszoreare-form-group {
+    width: 100%;
+  }
+
+  .asignacioneszoreare-modal-content {
+    width: 90%;
+  }
+
+  .asignacioneszoreare-table th,
+  .asignacioneszoreare-table td {
+    padding: 10px 6px;
+    font-size: 13px;
+  }
+}

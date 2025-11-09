@@ -12,7 +12,8 @@ import {
   FaUserCheck,
   FaAddressBook,
   FaClipboardList,
-  FaMapMarkedAlt
+  FaMapMarkedAlt,
+  FaFileAlt,
 } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import "../styles/Sidebar.css";
@@ -30,6 +31,9 @@ const MENU_ITEMS = [
   { id: "contratos", icon: FaClipboardList, label: "Contratos", roles: ["ADMIN", "RRHH"] },
   { id: "vinculosContratos", icon: FaAddressBook, label: "Vínculos Contratos", roles: ["ADMIN", "RRHH"] },
   { id: "municipios", icon: FaMapMarkedAlt, label: "Municipios", roles: ["ADMIN"] },
+  { id: "zores", icon: FaFileAlt, label: "Zores", roles: ["ADMIN"] },
+  { id: "ares", icon: FaFileAlt, label: "Ares", roles: ["ADMIN"] },
+  { id: "asignacionesZoreAre", icon: FaClipboardList, label: "Asignación Zore-Are", roles: ["ADMIN"] },
 ];
 
 const Sidebar = ({ sidebarOpen, toggleSidebar, activeTab, setActiveTab, handleLogout, user, loadingUser }) => {
@@ -75,23 +79,25 @@ const Sidebar = ({ sidebarOpen, toggleSidebar, activeTab, setActiveTab, handleLo
         </button>
       </div>
 
-      {/* Menú principal */}
-      <nav className="sidebar-menu">
-        {MENU_ITEMS.filter(item => item.roles.includes(role)).map(item => {
-          const IconComponent = item.icon;
-          return (
-            <button
-              key={item.id}
-              type="button"
-              className={`menu-item ${activeTab === item.id ? "active" : ""}`}
-              onClick={() => setActiveTab(item.id)}
-            >
-              <IconComponent className={sidebarOpen ? "icon-normal" : "icon-large"} />
-              {showText && <span>{item.label}</span>}
-            </button>
-          );
-        })}
-      </nav>
+      {/* Menú principal con scroll */}
+      <div className="sidebar-menu-container">
+        <nav className="sidebar-menu">
+          {MENU_ITEMS.filter(item => item.roles.includes(role)).map(item => {
+            const IconComponent = item.icon;
+            return (
+              <button
+                key={item.id}
+                type="button"
+                className={`menu-item ${activeTab === item.id ? "active" : ""}`}
+                onClick={() => setActiveTab(item.id)}
+              >
+                <IconComponent className={sidebarOpen ? "icon-normal" : "icon-large"} />
+                {showText && <span>{item.label}</span>}
+              </button>
+            );
+          })}
+        </nav>
+      </div>
 
       {/* Pie del sidebar */}
       <div className="sidebar-footer">
