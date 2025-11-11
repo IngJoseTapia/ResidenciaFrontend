@@ -376,7 +376,7 @@ const AsignacionesZoreAre = () => {
                   <option value="">Seleccionar Zore...</option>
                   {zores.map((z) => (
                     <option key={z.id} value={String(z.id)}>
-                      {z.numeracion} - {z.usuario ? `${z.usuario.nombre} ${z.usuario.apellidoPaterno}` : "Sin usuario"}
+                      {z.numeracion} - {z.usuario ? `${z.usuario.nombre} ${z.usuario.apellidoPaterno} ${z.usuario.apellidoMaterno}` : "Sin usuario"}
                     </option>
                   ))}
                 </select>
@@ -396,7 +396,7 @@ const AsignacionesZoreAre = () => {
                   <option value="">Seleccionar Are...</option>
                   {ares.map((a) => (
                     <option key={a.id} value={String(a.id)}>
-                      {a.numeracion} - {a.usuario ? `${a.usuario.nombre} ${a.usuario.apellidoPaterno}` : "Sin usuario"}
+                      {a.numeracion} - {a.usuario ? `${a.usuario.nombre} ${a.usuario.apellidoPaterno} ${a.usuario.apellidoMaterno}` : "Sin usuario"}
                     </option>
                   ))}
                 </select>

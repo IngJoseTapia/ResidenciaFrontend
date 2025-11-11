@@ -15,6 +15,7 @@ import { MunicipioProvider } from "../context/MunicipioProvider";
 import { ZoreProvider } from "../context/ZoreProvider";
 import { AreProvider } from "../context/AreProvider";
 import { AsignacionZoreAreProvider } from "../context/AsignacionZoreAreProvider";
+import { LocalidadProvider } from "../context/LocalidadProvider";
 
 import Topbar from "../components/Topbar";
 import Sidebar from "../components/Sidebar";
@@ -34,6 +35,7 @@ import Municipios from "../tabs/Municipios";
 import Zores from "../tabs/Zores";
 import Ares from "../tabs/Ares";
 import AsignacionesZoreAre from "../tabs/AsignacionesZoreAre";
+import Localidades from "../tabs/Localidades";
 
 import "../styles/Dashboard.css";
 
@@ -164,6 +166,14 @@ const DashboardAdmin = () => {
             {activeTab === "municipios" && (
               <MunicipioProvider user={user}>
                 <Municipios />
+              </MunicipioProvider>
+            )}
+
+            {activeTab === "localidades" && (
+              <MunicipioProvider user={user}>
+                <LocalidadProvider user={user}>
+                  <Localidades />
+                </LocalidadProvider>
               </MunicipioProvider>
             )}
 

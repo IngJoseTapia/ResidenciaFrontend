@@ -31,6 +31,7 @@ const MENU_ITEMS = [
   { id: "contratos", icon: FaClipboardList, label: "Contratos", roles: ["ADMIN", "RRHH"] },
   { id: "vinculosContratos", icon: FaAddressBook, label: "Vínculos Contratos", roles: ["ADMIN", "RRHH"] },
   { id: "municipios", icon: FaMapMarkedAlt, label: "Municipios", roles: ["ADMIN"] },
+  { id: "localidades", icon: FaMapMarkedAlt, label: "Localidades", roles: ["ADMIN"] },
   { id: "zores", icon: FaFileAlt, label: "Zores", roles: ["ADMIN"] },
   { id: "ares", icon: FaFileAlt, label: "Ares", roles: ["ADMIN"] },
   { id: "asignacionesZoreAre", icon: FaClipboardList, label: "Asignación Zore-Are", roles: ["ADMIN"] },
