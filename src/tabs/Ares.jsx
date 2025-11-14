@@ -219,7 +219,7 @@ const Ares = () => {
         </div>
 
         <div className="ares-form-group">
-          <label>Usuario SE</label>
+          <label>Usuario CAE</label>
           <select
             name="usuarioId"
             value={formData.usuarioId}

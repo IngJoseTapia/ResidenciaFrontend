@@ -1,0 +1,546 @@
+/* src/styles/Secciones.css */
+/* === SECCIONES TAB ESTILOS === */
+
+.secciones-container {
+  padding: 2rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto 1fr auto;
+  gap: 1rem;
+
+  overflow: hidden;
+  min-height: 0;
+  min-width: 0;
+}
+
+.secciones-title {
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  color: #000d1f;
+}
+
+.secciones-form-table {
+  background: #ededed;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow:
+    0 10px 20px rgba(0, 0, 0, 0.2),
+    0 20px 40px rgba(0, 0, 0, 0.1),
+    0 30px 60px rgba(0, 0, 0, 0.1);
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
+  min-width: 0 !important;
+  display: block;
+  flex-shrink: 1;
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.secciones-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 2px solid #0056b3;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.secciones-table th,
+.secciones-table td {
+  border: 1.5px solid #0056b3;
+  padding: 10px 12px;
+  text-align: left;
+  transition: background-color 0.3s ease;
+}
+
+.secciones-table th {
+  background-color: #0056b3;
+  color: #ffffff;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.secciones-table tr {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.secciones-table tr:nth-child(even) {
+  background-color: #dceafc;
+}
+
+.secciones-table tr:hover {
+  background-color: #adcdfe;
+  transition: background-color 0.3s ease;
+}
+
+/* === BOTONES DE ACCIÓN === */
+
+.secciones-action-cell {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.secciones-btn-icon {
+  width: 36px;
+  height: 36px;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.secciones-btn-icon.edit {
+  background-color: #3498db;
+  color: white;
+}
+
+.secciones-btn-icon.edit:hover {
+  background-color: #2980b9;
+  transform: scale(1.1);
+}
+
+.secciones-btn-icon.delete {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.secciones-btn-icon.delete:hover {
+  background-color: #c0392b;
+  transform: scale(1.1);
+}
+
+.secciones-btn-icon svg {
+  font-size: 18px;
+}
+
+/* === FORMULARIO DE CREACIÓN === */
+
+.secciones-form {
+  background: #ededed;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow:
+    0 10px 20px rgba(0, 0, 0, 0.2),
+    0 20px 40px rgba(0, 0, 0, 0.1),
+    0 30px 60px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem 2rem;
+  box-sizing: border-box;
+  margin-bottom: 2rem;
+}
+
+.secciones-form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.secciones-form-group label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #000d1f;
+}
+
+.secciones-form-group input,
+.secciones-form-group select {
+  padding: 0.75rem;
+  border: 1px solid #9eacc0;
+  border-radius: 0.5rem;
+  outline: none;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.secciones-form-group input:focus,
+.secciones-form-group select:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3);
+}
+
+/* === MULTISELECT (LOCALIDADES) === */
+.multi-select {
+  position: relative;
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #9eacc0;
+  border-radius: 0.5rem;
+  background-color: #fff;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #000d1f;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+/* Cuando se pasa el mouse o está enfocado */
+.multi-select:hover,
+.multi-select:focus-within {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3);
+}
+
+/* Cuando está deshabilitado */
+.multi-select.disabled {
+  background-color: #ffffff;
+  cursor: not-allowed;
+  opacity: 0.5;
+  border: 1px solid #a7a6a6;
+}
+
+/* Texto principal (igual que el placeholder de un select) */
+.multi-select-selected {
+  color: #000d1f;
+  font-size: 1rem;
+}
+
+/* Placeholder tipo mensaje */
+.multi-select-placeholder {
+  font-size: 0.9rem;
+  color: #777;
+  margin-top: 0.3rem;
+}
+
+/* Dropdown con opciones */
+.multi-select-options {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 100%;
+  max-height: 150px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid #9eacc0;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+  padding: 0.5rem 0;
+  box-sizing: border-box;
+  animation: fadeIn 0.15s ease-in-out;
+}
+
+/* === CHECKBOX ITEMS (Localidades) === */
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.75rem;
+  padding: 0.45rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: 0.95rem;
+  user-select: none;
+}
+
+.checkbox-item:hover {
+  background-color: #f2f6ff;
+}
+
+/* Cuadro del checkbox */
+.checkbox-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  accent-color: #6366f1;
+  border-radius: 4px;
+  border: 1.5px solid #9eacc0;
+  background-color: #fff;
+  cursor: pointer;
+  appearance: none;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+/* Checkmark personalizado */
+.checkbox-item input[type="checkbox"]::before {
+  content: "";
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  width: 6px;
+  height: 10px;
+  border-right: 3px solid #fff;
+  border-bottom: 3px solid #fff;
+  transform: translate(-50%, -50%) rotate(45deg);
+  opacity: 0;
+}
+
+/* Cuando está seleccionado */
+.checkbox-item input[type="checkbox"]:checked {
+  background-color: #000d1f;
+  border-color: #000d1f;
+}
+
+.checkbox-item input[type="checkbox"]:checked::before {
+  opacity: 1;
+}
+
+/* === FLECHA DEL MULTISELECT === */
+.multi-select-selected {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.multi-select-icon {
+  font-size: 0.7rem;
+  color: #000000;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+/* === BOTÓN PRINCIPAL === */
+
+.secciones-btn-guardar {
+  grid-column: span 2;
+  justify-self: center;
+  background: #000d1f;
+  color: #fff;
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.secciones-btn-guardar:hover {
+  background: #003366;
+  transform: scale(1.02);
+}
+
+.secciones-btn-guardar:disabled {
+  background-color: #3a3a3a;
+  cursor: not-allowed;
+}
+
+/* === MENSAJES === */
+
+.form-message-create-s,
+.form-message-modal-s,
+.form-message-table-s {
+  display: inline-block;
+  text-align: center;
+  padding: 0.8rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  box-sizing: border-box;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  grid-column: span 2;
+  justify-self: center;
+}
+
+.form-message-create-s.success,
+.form-message-modal-s.success,
+.form-message-table-s.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1.5px solid #155724;
+}
+
+.form-message-create-s.error,
+.form-message-modal-s.error,
+.form-message-table-s.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1.5px solid #721c24;
+}
+
+.form-message-create-s.info,
+.form-message-modal-s.info,
+.form-message-table-s.info {
+  background-color: #d1ecf1;
+  color: #0c5460;
+  border: 1.5px solid #0c5460;
+}
+
+/* === MODAL GENERAL === */
+
+.secciones-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.secciones-modal-content {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 800px;
+  width: 90%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  animation: fadeInScale 0.2s ease;
+}
+
+.secciones-modal-title {
+  text-align: center;
+  font-size: 1.4rem;
+  color: #000d1f;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+
+/* === FORMULARIO DEL MODAL === */
+
+.secciones-modal-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem 2rem; /* Espaciado entre filas y columnas */
+}
+
+/* Hace que los campos largos (como mensajes o botones) abarquen ambas columnas */
+.secciones-modal-form-group.full-width,
+.form-message-modal-s,
+.secciones-modal-buttons {
+  grid-column: span 2;
+}
+
+.secciones-modal-form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.secciones-modal-form-group label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #000d1f;
+}
+
+.secciones-modal-form-group input,
+.secciones-modal-form-group select {
+  padding: 0.75rem;
+  border: 1px solid #9eacc0;
+  border-radius: 0.5rem;
+  outline: none;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.secciones-modal-form-group input:focus,
+.secciones-modal-form-group select:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3);
+}
+
+/* === BOTONES DEL MODAL === */
+
+.secciones-modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.btn-guardar {
+  background-color: #000d1f;
+  color: #fff;
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+
+.btn-guardar:hover {
+  background-color: #003366;
+}
+
+.btn-cancelar {
+  background-color: #555;
+  color: #ffffff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-cancelar:hover {
+  background-color: #666;
+}
+
+.btn-eliminar {
+  background-color: #ff4d4d;
+  color: #ffffff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-eliminar:hover {
+  background-color: #e03e3e;
+}
+
+/* === CONFIRM MODAL === */
+
+.confirm-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+/* === SPINNER === */
+
+.spinner {
+  margin-left: 8px;
+  animation: spin 1s linear infinite;
+}
+
+/* === ANIMACIONES === */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -16,6 +16,7 @@ import { ZoreProvider } from "../context/ZoreProvider";
 import { AreProvider } from "../context/AreProvider";
 import { AsignacionZoreAreProvider } from "../context/AsignacionZoreAreProvider";
 import { LocalidadProvider } from "../context/LocalidadProvider";
+import { SeccionProvider } from "../context/SeccionProvider";
 
 import Topbar from "../components/Topbar";
 import Sidebar from "../components/Sidebar";
@@ -36,6 +37,7 @@ import Zores from "../tabs/Zores";
 import Ares from "../tabs/Ares";
 import AsignacionesZoreAre from "../tabs/AsignacionesZoreAre";
 import Localidades from "../tabs/Localidades";
+import Secciones from "../tabs/Secciones";
 
 import "../styles/Dashboard.css";
 
@@ -175,6 +177,12 @@ const DashboardAdmin = () => {
                   <Localidades />
                 </LocalidadProvider>
               </MunicipioProvider>
+            )}
+
+            {activeTab === "secciones" && (
+              <SeccionProvider user={user}>
+                <Secciones />
+              </SeccionProvider>
             )}
 
             {activeTab === "zores" && (
